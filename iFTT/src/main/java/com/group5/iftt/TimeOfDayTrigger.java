@@ -15,7 +15,7 @@ public boolean isValidate(){
  }
  return false;
 }
-public void timeTrigger(int hour, int minute){
+public void timeTrigger(String hour, String minute){
     this.hour=hour;
     this.minute=minute;
 }
