@@ -12,7 +12,7 @@ private String minute;
     }
 
 public boolean isValidate(){
-    //tronca ai minuti...
+    //tronca ai minuti
     LocalTime currentTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
     LocalTime selectedTime = LocalTime.parse(hour+":"+minute);
     if(currentTime.equals(selectedTime)){
