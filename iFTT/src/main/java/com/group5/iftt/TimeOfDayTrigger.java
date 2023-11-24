@@ -9,13 +9,13 @@ private String minute;
 
 public boolean isValidate(){
     LocalTime currentTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
-    LocalTime userSelectedTime = userSelectedTime.parse(hour+":"+minute);
+    LocalTime userSelectedTime = LocalTime.parse(hour+":"+minute);
  if(currentTime.equals(userSelectedTime)){
     return true;
  }
  return false;
 }
-public void timeTrigger(int hour, int minute){
+public void timeTrigger(String hour, String minute){
     this.hour=hour;
     this.minute=minute;
 }

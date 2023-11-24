@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
         primaryStage.setTitle("IFTTT's son");
-        primaryStage.setScene(new Scene(root, 382, 462));
+        primaryStage.setScene(new Scene(root, 382, 480));
         primaryStage.show();
     }
 
