@@ -65,6 +65,11 @@
             </padding>
          </Label>
          <ComboBox fx:id="actionComboBox" prefWidth="150.0" />
+         <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#addFileAction" text="Carica file">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin>
+         </Button>
       </children>
    </HBox>
    <HBox layoutY="153.0" prefHeight="50.0" prefWidth="423.0">
