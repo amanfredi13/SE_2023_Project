@@ -9,7 +9,7 @@ private String minute;
 
 public boolean isValidate(){
     LocalTime currentTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
-    LocalTime userSelectedTime = userSelectedTime.parse(hour+":"+minute);
+    LocalTime userSelectedTime = LocalTime.parse(hour+":"+minute);
  if(currentTime.equals(userSelectedTime)){
     return true;
  }
