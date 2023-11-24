@@ -8,9 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,6 +38,13 @@ public class AddActionController implements Initializable {
     private ComboBox comboBoxMinute;
     @FXML
     private Button loadFileButton;
+    @FXML
+    private Label fileNameLabel;
+    private File selectedAudioFile;
+
+    public void setFileNameLabel(Label fileNameLabel) {
+        this.fileNameLabel = fileNameLabel;
+    }
 
     public void setMainController(MainController mainController) {
 
@@ -102,8 +112,26 @@ public class AddActionController implements Initializable {
 
     }
 
+
+
     @FXML
     public void addFileAction(ActionEvent actionEvent) {
-    System.out.printf("stai forte");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Scegli un file audio");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File Audio", "*.mp3", "*.wav", "*.ogg")); // Modifica le estensioni secondo le tue esigenze
+
+        // Mostra la finestra di dialogo per la selezione del file
+        selectedAudioFile = fileChooser.showOpenDialog(new Stage());
+
+        // Chiamare un metodo per aggiornare la Label con il nome del file selezionato
+        updateFileNameLabel();
     }
-}
+
+    // Metodo per aggiornare la Label con il nome del file selezionato
+    private void updateFileNameLabel() {
+        if (selectedAudioFile != null) {
+            fileNameLabel.setText(selectedAudioFile.getName());
+        } else {
+            fileNameLabel.setText("Nessun file selezionato");
+        }
+    }}
