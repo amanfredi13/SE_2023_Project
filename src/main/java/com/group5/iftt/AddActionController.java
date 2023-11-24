@@ -4,16 +4,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,18 +37,19 @@ public class AddActionController implements Initializable {
     private ComboBox comboBoxMinute;
 
     public void setMainController(MainController mainController) {
+
         this.mainController = mainController;
     }
 
     @FXML
     private void addAction() {
-        Action action = new Action(
+        Rule rule = new Rule(
                 nameTextField.getText(),
                 triggerComboBox.getValue().toString(),
                 actionComboBox.getValue().toString(),
                 statusComboBox.getValue().toString()
         );
-        mainController.addAction(action);
+        mainController.addAction(rule);
         cancel();
     }
     @FXML
