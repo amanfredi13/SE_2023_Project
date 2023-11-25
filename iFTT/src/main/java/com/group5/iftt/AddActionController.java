@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -21,15 +18,13 @@ public class AddActionController implements Initializable {
 
     @FXML
     private TextField nameTextField;
-
     @FXML
     private Button addButton;
-
     private MainController mainController;
     @FXML
     private ComboBox triggerComboBox;
     @FXML
-    private ComboBox actionComboBox;
+    private ComboBox<Action> actionComboBox;
     @FXML
     private ComboBox statusComboBox;
     @FXML
@@ -41,6 +36,8 @@ public class AddActionController implements Initializable {
     @FXML
     private Label fileNameLabel;
     private File selectedAudioFile;
+    @FXML
+    private TextArea messageTextArea;
 
     public void setFileNameLabel(Label fileNameLabel) {
         this.fileNameLabel = fileNameLabel;
@@ -53,15 +50,45 @@ public class AddActionController implements Initializable {
 
     @FXML
     private void addAction() {
+
+        Action selectedAction = (Action) actionComboBox.getValue();
+
+        if(selectedAction == null){
+            showAlert("Errore", "Seleziona un'azione");
+            return;
+        }
+
+        String selectedHour = (String) comboBoxOra.getValue();
+        String selectedMinute = (String) comboBoxMinute.getValue();
+
         Rule rule = new Rule(
                 nameTextField.getText(),
                 triggerComboBox.getValue().toString(),
-                actionComboBox.getValue().toString(),
-                statusComboBox.getValue().toString()
+                selectedAction,
+                statusComboBox.getValue().toString(),
+                selectedHour,
+                selectedMinute
         );
+
+        // Aggiungere messaggio dall'utente
+        if ("Avviso popup".equals(selectedAction)) {
+            String userMessage = messageTextArea.getText();
+            if (userMessage != null && !userMessage.isEmpty()) {
+                ShowDialogBoxAction showDialogBoxAction = new ShowDialogBoxAction();
+                showDialogBoxAction.setMessage(userMessage);
+                rule.setAction(showDialogBoxAction);
+            } else {
+                showAlert("Messaggio d'avviso", "Inserisci un messaggio per l'avviso popup.");
+                return;
+            }
+        } else {
+            messageTextArea.setVisible(false);
+        }
         mainController.addAction(rule);
         cancel();
+
     }
+
     @FXML
     private void cancel() {
         Stage stage = (Stage) addButton.getScene().getWindow();
@@ -70,16 +97,18 @@ public class AddActionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         //inizializzazione comboBox che permettono di customizzare la regola in base alle diverse operazioni possibili
         triggerComboBox.setItems(FXCollections.observableArrayList("Ora del giorno"));
-        actionComboBox.setItems(FXCollections.observableArrayList("Riproduzione audio", "Avviso popup"));
+        actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction("Riproduzione Audio"), new ShowDialogBoxAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
         //inizializzazione comboBox relativi a ora e minuti.
-        comboBoxOra.setItems(FXCollections.observableArrayList("01","02","03","04","05","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"));
-        comboBoxMinute.setItems(FXCollections.observableArrayList("01","02","03","04","05","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"));
+        comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
+        comboBoxMinute.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"));
         comboBoxOra.setVisible(false);
         comboBoxMinute.setVisible(false);
         loadFileButton.setVisible(false);
+
         triggerComboBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -96,13 +125,17 @@ public class AddActionController implements Initializable {
             }
         });
 
-        actionComboBox.valueProperty().addListener(new ChangeListener<String>() {
+        actionComboBox.valueProperty().addListener(new ChangeListener<Action>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            public void changed(ObservableValue<? extends Action> observable, Action oldValue, Action newValue) {
                 // Verifica se il nuovo valore contiene la stringa "Ora del giorno"
-                if (newValue != null && newValue.contains("Riproduzione audio")) {
+                if (newValue instanceof PlayAudioFileAction) {
                     // Se sì, rendi visibile il bottone
                     loadFileButton.setVisible(true);
+                    messageTextArea.setVisible(false);
+                } else if (newValue instanceof ShowDialogBoxAction) {
+                    loadFileButton.setVisible(false);
+                    messageTextArea.setVisible(true);
                 } else {
                     // Altrimenti, rendi invisibile il bottone
                     loadFileButton.setVisible(false);
@@ -111,7 +144,6 @@ public class AddActionController implements Initializable {
         });
 
     }
-
 
 
     @FXML
@@ -134,4 +166,15 @@ public class AddActionController implements Initializable {
         } else {
             fileNameLabel.setText("Nessun file selezionato");
         }
-    }}
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
+}

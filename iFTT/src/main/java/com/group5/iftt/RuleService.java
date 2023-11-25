@@ -19,4 +19,5 @@ public final class RuleService {
     public void add(Rule rule){
         rule_list.add(rule);
     }
+
 }

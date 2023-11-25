@@ -1,5 +1,7 @@
 package com.group5.iftt;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -7,17 +9,41 @@ public class Rule {
 
     private StringProperty name;
     private StringProperty condition;
-    private StringProperty action;
+    private ObjectProperty<Action> action;
     private StringProperty status;
+    private ObjectProperty<TimeOfDayTrigger> timeTrigger;
+    private boolean actionStarted = false;
+    public boolean isActionStarted(){
+        return actionStarted;
+    }
 
-    public Rule(String name, String condition, String action, String status) {
+    public void setActionStarted(boolean actionStarted){
+        this.actionStarted = actionStarted;
+    }
+
+    public Rule(String name, String condition,Action action, String status, String hour, String minute) {
         this.name = new SimpleStringProperty(name);
         this.condition = new SimpleStringProperty(condition);
-        this.action = new SimpleStringProperty(action);
+        this.action = new SimpleObjectProperty<>(action);
         this.status = new SimpleStringProperty(status);
+        this.timeTrigger = new SimpleObjectProperty<>(new TimeOfDayTrigger(hour, minute));
     }
 
     // Getters and setters
+
+    public TimeOfDayTrigger getTimeTrigger(){
+        return timeTrigger.get();
+    }
+
+    public void setTimeTrigger(TimeOfDayTrigger timeTrigger) {
+        this.timeTrigger.set(timeTrigger);
+    }
+
+    public boolean isTriggered() {
+        return  timeTrigger.get().isValidate();
+    }
+
+
     public String getName() {
         return name.get();
     }
@@ -34,11 +60,11 @@ public class Rule {
         this.condition.set(condition);
     }
 
-    public String getAction() {
+    public Action getAction() {
         return action.get();
     }
 
-    public void setAction(String action) {
+    public void setAction(Action action) {
         this.action.set(action);
     }
 
@@ -58,12 +84,13 @@ public class Rule {
         return condition;
     }
 
-    public StringProperty actionProperty() {
+    public ObjectProperty<Action> actionProperty() {
         return action;
     }
 
     public StringProperty statusProperty() {
         return status;
     }
+
 
 }

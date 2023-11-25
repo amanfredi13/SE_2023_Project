@@ -4,20 +4,16 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 public class TimeOfDayTrigger {
-private String hour;
-private String minute;
+    private LocalTime triggerTime;
 
-public boolean isValidate(){
-    LocalTime currentTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
-    LocalTime userSelectedTime = LocalTime.parse(hour+":"+minute);
- if(currentTime.equals(userSelectedTime)){
-    return true;
- }
- return false;
-}
-public void timeTrigger(String hour, String minute){
-    this.hour=hour;
-    this.minute=minute;
-}
+    public TimeOfDayTrigger(String hour, String minute) {
+        this.triggerTime = LocalTime.parse(hour+ ":" + minute);
+    }
+
+    public boolean isValidate() {
+       LocalTime currentTime= LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
+        return currentTime.equals(triggerTime);
+    }
+
 }
 

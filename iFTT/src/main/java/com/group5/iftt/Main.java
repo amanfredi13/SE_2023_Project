@@ -15,6 +15,7 @@ public class Main extends Application {
         primaryStage.setTitle("IFTTT's son");
         primaryStage.setScene(new Scene(root, 382, 480));
         primaryStage.show();
+        new CheckRule();
     }
 
     public static void main(String[] args) {
