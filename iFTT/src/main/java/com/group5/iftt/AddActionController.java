@@ -37,6 +37,7 @@ public class AddActionController implements Initializable {
     private File selectedAudioFile;
     @FXML
     private TextArea messageTextArea;
+    private String filePath;
     public void setFileNameLabel(Label fileNameLabel) {
         this.fileNameLabel = fileNameLabel;
     }
@@ -78,6 +79,11 @@ public class AddActionController implements Initializable {
         } else {
             messageTextArea.setVisible(false);
         }
+
+
+
+
+
         mainController.addAction(rule);
         cancel();
     }
@@ -93,11 +99,11 @@ public class AddActionController implements Initializable {
 
         //inizializzazione comboBox che permettono di customizzare la regola in base alle diverse operazioni possibili
         triggerComboBox.setItems(FXCollections.observableArrayList("Ora del giorno"));
-        actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction("Riproduzione Audio"), new ShowDialogBoxAction()));
+        actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
         //inizializzazione comboBox relativi a ora e minuti.
-        comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
-        comboBoxMinute.setItems(FXCollections.observableArrayList("00","01", "02", "03", "04", "05","06","07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"));
+        comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05","06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
+        comboBoxMinute.setItems(FXCollections.observableArrayList("00","01", "02", "03", "04", "05","06","07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"));
         comboBoxOra.setVisible(false);
         comboBoxMinute.setVisible(false);
         loadFileButton.setVisible(false);
@@ -150,6 +156,15 @@ public class AddActionController implements Initializable {
 
         // Chiamare un metodo per aggiornare la Label con il nome del file selezionato
         updateFileNameLabel();
+        if (selectedAudioFile != null) {
+            filePath = selectedAudioFile.getAbsolutePath();
+            System.out.println("File percorso:  "+ filePath);
+            PlayAudioFileAction playAudioFileAction= new PlayAudioFileAction();
+            playAudioFileAction.audioAction(filePath);
+        } else {
+            filePath = null;
+        }
+
     }
 
     // Metodo per aggiornare la Label con il nome del file selezionato

@@ -5,19 +5,19 @@ import java.io.IOException;
 public class PlayAudioFileAction implements Action {
     private String filePath;
 
-    public PlayAudioFileAction(String filePath) {
-        this.filePath = filePath;
+    public PlayAudioFileAction() {
+
     }
 
-    public void audioAction(String filePath){
-        System.out.println("StartAction AUDIOOO");
-        startAction();
+
+    public void startAction(){
+
     }
 
-    public void startAction() {
+    public void audioAction(String filePath) {
+
         boolean audioPlayed = false;
-
-        File audioFile = new File("C:/Users/admin/OneDrive/Desktop/PROGETTO_SE/SE_2023_Project/iFTT/src/main/resources/com/group5/iftt/notifica.wav");
+        File audioFile = new File(filePath);
 
         try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile)) {
             DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
@@ -29,6 +29,7 @@ public class PlayAudioFileAction implements Action {
             e.printStackTrace();
         }
     }
+
 
 
     public String toString(){
