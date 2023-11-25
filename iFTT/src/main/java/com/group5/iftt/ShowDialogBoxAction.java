@@ -16,8 +16,6 @@ public class ShowDialogBoxAction implements Action {
     public void startAction() {
         if (!dialogShown) {
                 Platform.runLater(()->{
-                    //System.out.println("StartAction message");
-                //System.out.println(message);
                 messageAction(message);
                 dialogShown = true;
             });
@@ -27,9 +25,8 @@ public class ShowDialogBoxAction implements Action {
     public void messageAction(String message){
         //mostrare la finestra di dialogo
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Messaggio");
-        //alert.setHeaderText(null);
-       // System.out.println(message);
+        alert.setTitle("Avviso");
+        alert.setHeaderText(null);
         alert.setContentText(message);
 
         alert.showAndWait().ifPresent(response -> {

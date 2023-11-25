@@ -49,10 +49,8 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddActionView.fxml"));
             AnchorPane addActionView = loader.load();
-            System.out.println("messaggio 1");
             AddActionController addActionController = loader.getController();
             addActionController.setMainController(this);
-            System.out.println("Messaggio 2");
             Stage stage = new Stage();
             stage.setTitle("Aggiungi azione");
             stage.initModality(Modality.APPLICATION_MODAL);

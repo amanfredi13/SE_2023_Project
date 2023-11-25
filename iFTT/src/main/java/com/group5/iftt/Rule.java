@@ -92,5 +92,8 @@ public class Rule {
         return status;
     }
 
+    public boolean isActive(){
+        return "Enabled".equals(status.get());
+    }
 
 }
