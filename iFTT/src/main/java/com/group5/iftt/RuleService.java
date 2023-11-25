@@ -20,4 +20,9 @@ public final class RuleService {
         rule_list.add(rule);
     }
 
+    public void remove(Rule rule) {
+        rule_list.remove(rule);
+    }
+
+
 }

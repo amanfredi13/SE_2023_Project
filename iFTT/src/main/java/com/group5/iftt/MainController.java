@@ -32,6 +32,9 @@ public class MainController {
     @FXML
     private Button addActionButton;
 
+    @FXML
+    private Button ButtonCancel;
+
     //private ObservableList<Rule> rules = FXCollections.observableArrayList();
     ObservableList<Rule> rules = RuleService.getInstance();
 
@@ -61,6 +64,19 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void cancelAction() {
+        // Ottieni l'azione selezionata nella tabella
+        Rule selectedRule = actionTable.getSelectionModel().getSelectedItem();
+
+        if (selectedRule != null) {
+            // Rimuovi l'azione dalla tabella e dalla lista
+            actionTable.getItems().remove(selectedRule);
+            rules.remove(selectedRule);
+        }
+    }
+    public void cancelAction(Rule rule){rules.remove(rule);}
 
     public void addAction(Rule rule) {
         rules.add(rule);

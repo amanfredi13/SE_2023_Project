@@ -18,5 +18,6 @@
         </TableView>
         <Button fx:id="addActionButton" layoutX="303.0" layoutY="414.0" onAction="#addAction" text="Add rule" />
       <Text layoutX="158.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IFTTT's son" />
+      <Button fx:id="ButtonCancel" layoutX="241.0" layoutY="414.0" onAction="#cancelAction" text="Cancel" />
     </children>
 </AnchorPane>

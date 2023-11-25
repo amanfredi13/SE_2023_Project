@@ -16,7 +16,7 @@ public class CheckRule {
     private void check() {
         Platform.runLater(() -> {
                     for (Rule rule : RuleService.getInstance()) {
-                        if (rule.isTriggered() && !rule.isActionStarted() && rule.isActive()) {
+                            if (rule.isTriggered() && !rule.isActionStarted() && rule.isActive()) {
                                 rule.getAction().startAction();
                                 rule.setActionStarted(true);
                                 break;
