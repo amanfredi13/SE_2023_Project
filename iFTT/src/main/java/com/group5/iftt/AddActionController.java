@@ -38,6 +38,8 @@ public class AddActionController implements Initializable {
     @FXML
     private TextArea messageTextArea;
     private String filePath;
+
+
     public void setFileNameLabel(Label fileNameLabel) {
         this.fileNameLabel = fileNameLabel;
     }
@@ -80,10 +82,17 @@ public class AddActionController implements Initializable {
             messageTextArea.setVisible(false);
         }
 
-
-
-
-
+        if ("Riproduzione Audio".equals(selectedAction.toString())) {
+            String filePath = selectedAudioFile.getAbsolutePath();
+            if (filePath != null && !filePath.isEmpty()) {
+                PlayAudioFileAction playAudioFileAction = new PlayAudioFileAction();
+                playAudioFileAction.setFilePath(filePath);
+                rule.setAction(playAudioFileAction);
+            } else {
+                showAlert("Messaggio d'avviso", "Inserisci un messaggio per l'avviso popup.");
+                return;
+            }
+        }
         mainController.addAction(rule);
         cancel();
     }
@@ -158,21 +167,17 @@ public class AddActionController implements Initializable {
         updateFileNameLabel();
         if (selectedAudioFile != null) {
             filePath = selectedAudioFile.getAbsolutePath();
-            System.out.println("File percorso:  "+ filePath);
-            PlayAudioFileAction playAudioFileAction= new PlayAudioFileAction();
-            playAudioFileAction.audioAction(filePath);
-        } else {
-            filePath = null;
         }
-
     }
 
     // Metodo per aggiornare la Label con il nome del file selezionato
     private void updateFileNameLabel() {
         if (selectedAudioFile != null) {
+            filePath = selectedAudioFile.getAbsolutePath();
+
             fileNameLabel.setText(selectedAudioFile.getName());
         } else {
-            fileNameLabel.setText("Nessun file selezionato");
+            filePath = null;
         }
     }
 
