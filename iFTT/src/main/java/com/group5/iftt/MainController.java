@@ -34,6 +34,7 @@ public class MainController {
 
     //private ObservableList<Rule> rules = FXCollections.observableArrayList();
     ObservableList<Rule> rules = RuleService.getInstance();
+
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         conditionColumn.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());

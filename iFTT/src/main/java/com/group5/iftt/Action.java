@@ -1,5 +1,5 @@
 package com.group5.iftt;
 
-public interface Action {
+public interface Action{
     void startAction();
 }
