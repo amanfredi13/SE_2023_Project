@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddActionController implements Initializable {
-
     @FXML
     private TextField nameTextField;
     @FXML
@@ -38,28 +37,23 @@ public class AddActionController implements Initializable {
     private File selectedAudioFile;
     @FXML
     private TextArea messageTextArea;
-
     public void setFileNameLabel(Label fileNameLabel) {
         this.fileNameLabel = fileNameLabel;
     }
-
     public void setMainController(MainController mainController) {
-
         this.mainController = mainController;
     }
-
     @FXML
     private void addAction() {
 
-        Action selectedAction = (Action) actionComboBox.getValue();
-
+        Action selectedAction = actionComboBox.getValue();
         if(selectedAction == null){
             showAlert("Errore", "Seleziona un'azione");
             return;
         }
-
-        String selectedHour = (String) comboBoxOra.getValue();
-        String selectedMinute = (String) comboBoxMinute.getValue();
+        //estraggo valori relativi alla sveglia delle due combBox
+        String selectedHour = comboBoxOra.getValue().toString();
+        String selectedMinute = comboBoxMinute.getValue().toString();
 
         Rule rule = new Rule(
                 nameTextField.getText(),
@@ -71,7 +65,7 @@ public class AddActionController implements Initializable {
         );
 
         // Aggiungere messaggio dall'utente
-        if ("Avviso popup".equals(selectedAction)) {
+        if ("Avviso popup".equals(selectedAction.toString())) {
             String userMessage = messageTextArea.getText();
             if (userMessage != null && !userMessage.isEmpty()) {
                 ShowDialogBoxAction showDialogBoxAction = new ShowDialogBoxAction();
@@ -86,7 +80,6 @@ public class AddActionController implements Initializable {
         }
         mainController.addAction(rule);
         cancel();
-
     }
 
     @FXML
@@ -104,7 +97,7 @@ public class AddActionController implements Initializable {
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
         //inizializzazione comboBox relativi a ora e minuti.
         comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
-        comboBoxMinute.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"));
+        comboBoxMinute.setItems(FXCollections.observableArrayList("00","01", "02", "03", "04", "05","06","07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"));
         comboBoxOra.setVisible(false);
         comboBoxMinute.setVisible(false);
         loadFileButton.setVisible(false);

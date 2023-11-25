@@ -9,18 +9,18 @@ public class CheckRule {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public CheckRule() {
-        System.out.println("CheckRule inizializzata");
+        //System.out.println("CheckRule inizializzata");
         // Esegui il controllo ogni minuto
         scheduler.scheduleAtFixedRate(this::check, 0, 1, TimeUnit.SECONDS);
     }
 
     private void check() {
-        System.out.println("check rule.........");
+        //System.out.println("check rule.........");
         Platform.runLater(() -> {
                     for (Rule rule : RuleService.getInstance()) {
-                        System.out.println("Check rule:" + rule.getName());
+                        //System.out.println("Check rule:" + rule.getName());
                         if (rule.isTriggered() && !rule.isActionStarted()) {
-                            System.out.println("trigger azione rule start:" + rule.getName());
+                           // System.out.println("trigger azione rule start:" + rule.getName());
                             rule.getAction().startAction();
                             rule.setActionStarted(true);
 
