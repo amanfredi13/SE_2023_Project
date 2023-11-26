@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RuleTest {
 
+
     @Test
     void testSettersAndGetters() {
         Action action1 = new MockAction();
@@ -46,8 +47,6 @@ class RuleTest {
 
     private static class MockAction implements Action {
         @Override
-        public void startAction() {
-            // Mock implementation of startAction for testing
-        }
+        public void startAction() {}
     }
 }
