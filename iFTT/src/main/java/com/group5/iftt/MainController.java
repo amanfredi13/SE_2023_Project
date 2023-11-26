@@ -34,8 +34,6 @@ public class MainController {
 
     @FXML
     private Button ButtonCancel;
-
-    //private ObservableList<Rule> rules = FXCollections.observableArrayList();
     ObservableList<Rule> rules = RuleService.getInstance();
 
     public void initialize() {

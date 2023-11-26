@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import static javafx.collections.FXCollections.observableList;
 
 public final class RuleService {
-    private static ObservableList<Rule> rule_list; //all'inizio serviva
+    private static ObservableList<Rule> rule_list;
     private RuleService(){
     rule_list = FXCollections.observableArrayList();
     }

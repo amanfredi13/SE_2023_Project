@@ -14,6 +14,5 @@ public class TimeOfDayTrigger {
        LocalTime currentTime= LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
         return currentTime.equals(triggerTime);
     }
-
 }
 

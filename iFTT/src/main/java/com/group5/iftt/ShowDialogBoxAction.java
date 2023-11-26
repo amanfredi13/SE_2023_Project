@@ -23,7 +23,7 @@ public class ShowDialogBoxAction implements Action {
     }
 
     public void messageAction(String message){
-        //mostrare la finestra di dialogo
+        //mostraro la finestra di dialogo
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Avviso");
         alert.setHeaderText(null);

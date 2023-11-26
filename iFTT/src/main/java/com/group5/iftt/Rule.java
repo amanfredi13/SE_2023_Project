@@ -29,8 +29,6 @@ public class Rule {
         this.timeTrigger = new SimpleObjectProperty<>(new TimeOfDayTrigger(hour, minute));
     }
 
-    // Getters and setters
-
     public TimeOfDayTrigger getTimeTrigger(){
         return timeTrigger.get();
     }
