@@ -1,5 +1,6 @@
 package com.group5.iftt.Controller;
 
+import com.group5.iftt.Controller.AddActionController;
 import com.group5.iftt.Model.Action;
 import com.group5.iftt.Model.Rule;
 import com.group5.iftt.Model.RuleService;
@@ -50,7 +51,7 @@ public class MainController {
     @FXML
     private void addAction() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddActionView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/group5/iftt/AddActionView.fxml"));
             AnchorPane addActionView = loader.load();
             AddActionController addActionController = loader.getController();
             addActionController.setMainController(this);
