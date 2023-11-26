@@ -1,12 +1,13 @@
 package com.group5.iftt.Model;
 import com.group5.iftt.Model.Action;
+import javafx.application.Platform;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 public class PlayAudioFileAction implements Action {
    private String filePath;
-   private volatile boolean audioPlayed = false;
+   public volatile boolean audioPlayed = false;
 
     public PlayAudioFileAction(){
 
@@ -19,11 +20,10 @@ public class PlayAudioFileAction implements Action {
 
     public void startAction(){
         if(!audioPlayed){
-            audioAction();
-            audioPlayed = true;
-        }
-
-    }
+            Platform.runLater(()->{
+                audioAction();
+            });
+        }}
 
     public void audioAction() {
         File audioFile = new File(filePath);
