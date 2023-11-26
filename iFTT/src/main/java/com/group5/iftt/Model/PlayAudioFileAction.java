@@ -1,4 +1,6 @@
-package com.group5.iftt;
+package com.group5.iftt.Model;
+import com.group5.iftt.Model.Action;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -6,8 +8,8 @@ public class PlayAudioFileAction implements Action {
    private String filePath;
    private volatile boolean audioPlayed = false;
 
-    public PlayAudioFileAction() {
-        //path = this.setFilePath(path);
+    public PlayAudioFileAction(){
+
     }
 
 

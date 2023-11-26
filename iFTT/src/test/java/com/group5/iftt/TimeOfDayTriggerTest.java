@@ -1,4 +1,5 @@
 package com.group5.iftt;
+import com.group5.iftt.Model.TimeOfDayTrigger;
 import org.junit.jupiter.api.Test;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;

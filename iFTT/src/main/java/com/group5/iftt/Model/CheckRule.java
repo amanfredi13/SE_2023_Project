@@ -1,4 +1,4 @@
-package com.group5.iftt;
+package com.group5.iftt.Model;
 
 import javafx.application.Platform;
 import java.util.concurrent.Executors;

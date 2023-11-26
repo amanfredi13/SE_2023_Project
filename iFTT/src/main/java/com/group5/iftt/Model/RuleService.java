@@ -1,4 +1,5 @@
-package com.group5.iftt;
+package com.group5.iftt.Model;
+import com.group5.iftt.Model.Rule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

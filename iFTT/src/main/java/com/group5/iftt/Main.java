@@ -1,6 +1,7 @@
 package com.group5.iftt;
 
 
+import com.group5.iftt.Model.CheckRule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

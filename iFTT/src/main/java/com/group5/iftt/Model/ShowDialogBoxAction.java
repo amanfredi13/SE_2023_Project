@@ -1,5 +1,6 @@
-package com.group5.iftt;
+package com.group5.iftt.Model;
 
+import com.group5.iftt.Model.Action;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
@@ -23,7 +24,7 @@ public class ShowDialogBoxAction implements Action {
     }
 
     public void messageAction(String message){
-        //mostraro la finestra di dialogo
+        //mostro la finestra di dialogo
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Avviso");
         alert.setHeaderText(null);

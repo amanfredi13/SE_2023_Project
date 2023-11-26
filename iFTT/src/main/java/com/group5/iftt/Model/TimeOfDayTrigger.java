@@ -1,9 +1,11 @@
-package com.group5.iftt;
+package com.group5.iftt.Model;
+
+import com.group5.iftt.Model.Trigger;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
-public class TimeOfDayTrigger {
+public class TimeOfDayTrigger implements Trigger {
     private LocalTime triggerTime;
 
     public TimeOfDayTrigger(String hour, String minute) {

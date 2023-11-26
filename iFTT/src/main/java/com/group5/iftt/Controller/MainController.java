@@ -1,6 +1,8 @@
-package com.group5.iftt;
+package com.group5.iftt.Controller;
 
-import javafx.collections.FXCollections;
+import com.group5.iftt.Model.Action;
+import com.group5.iftt.Model.Rule;
+import com.group5.iftt.Model.RuleService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
