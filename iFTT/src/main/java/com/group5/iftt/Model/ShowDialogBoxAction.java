@@ -38,4 +38,8 @@ public class ShowDialogBoxAction implements Action {
     public String toString() {
         return "Avviso popup";
     }
+
+    public String getMessage() {
+    return message;
+    }
 }

@@ -1,5 +1,4 @@
 package com.group5.iftt.Model;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;

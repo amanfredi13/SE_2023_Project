@@ -28,7 +28,5 @@ class PlayAudioFileActionTest {
 
         assertTrue(audioAction.audioPlayed);
     }
-
-
-    }
+        }
 

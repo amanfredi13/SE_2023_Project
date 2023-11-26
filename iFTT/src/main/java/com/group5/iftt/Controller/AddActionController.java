@@ -114,13 +114,13 @@ public class AddActionController implements Initializable {
         triggerComboBox.setItems(FXCollections.observableArrayList("Ora del giorno"));
         actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
-        //inizializzazione comboBox relativi a ora e minuti.
         comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05","06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
         comboBoxMinute.setItems(FXCollections.observableArrayList("00","01", "02", "03", "04", "05","06","07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"));
         comboBoxOra.setVisible(false);
         comboBoxMinute.setVisible(false);
         loadFileButton.setVisible(false);
 
+        //Le diverse comboBox effettueranno il displacement dei rispettibi bottoni o comboBox per permettere la customizzazione dell'azione
         triggerComboBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -162,7 +162,7 @@ public class AddActionController implements Initializable {
     public void addFileAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Scegli un file audio");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File Audio", "*.mp3", "*.wav", "*.ogg")); // Modifica le estensioni secondo le tue esigenze
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File Audio", "*.mp3", "*.wav"));
 
         // Mostra la finestra di dialogo per la selezione del file
         selectedAudioFile = fileChooser.showOpenDialog(new Stage());
