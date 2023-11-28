@@ -20,9 +20,7 @@ public class PlayAudioFileAction implements Action {
 
     public void startAction(){
         if(!audioPlayed){
-            Platform.runLater(()->{
                 audioAction();
-            });
         }}
 
     public void audioAction() {

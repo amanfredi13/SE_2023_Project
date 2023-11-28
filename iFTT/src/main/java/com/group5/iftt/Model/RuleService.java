@@ -12,7 +12,7 @@ public final class RuleService {
     }
     public static ObservableList<Rule> getInstance() {
         if(rule_list == null){
-             rule_list = FXCollections.observableArrayList();
+             new RuleService();
 
         }
         return rule_list;
