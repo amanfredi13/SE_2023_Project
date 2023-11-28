@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TimeOfDayTriggerTest {
         @Test   //mi assicuro che orari uguali mi restituiscano vero
-        void isValidateEqualDates() {
+        public void isValidateEqualDates() {
             // Arrange
 
             LocalTime currentTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);

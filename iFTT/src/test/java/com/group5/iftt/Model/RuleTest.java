@@ -8,7 +8,7 @@ class RuleTest {
 
 
     @Test
-    void testSettersAndGetters() {
+    public void testSettersAndGetters() {
         Action action1 = new MockAction();
         Action action2 = new MockAction();
         TimeOfDayTrigger timeTrigger1 = new TimeOfDayTrigger("12", "30");
@@ -31,17 +31,12 @@ class RuleTest {
     }
 
     @Test
-    void testActionStarted() {
+    public void testActionStarted() {
         Rule rule = new Rule("TestRule", "TestCondition", new MockAction(), "Enabled", "12", "30");
-
         assertFalse(rule.isActionStarted());
-
         rule.setActionStarted(true);
-
         assertTrue(rule.isActionStarted());
-
         rule.setActionStarted(false);
-
         assertFalse(rule.isActionStarted());
     }
 

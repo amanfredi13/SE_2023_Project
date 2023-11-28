@@ -14,13 +14,13 @@ class PlayAudioFileActionTest {
     private  String validPath = "/com/group5/iftt/AudioPerTest/notifica.wav";
 
     @Test  //Test per assicurarci che il file path venga preso correttamente
-    void setFilePath() {
+    public void setFilePath() {
         PlayAudioFileAction audioAction = new PlayAudioFileAction();
         assertEquals(validPath, audioAction.setFilePath(validPath));
     }
 
     @Test //Test riproduzione audio
-    void ValidAudioFilePlaysAudio() {
+    public void ValidAudioFilePlaysAudio() {
         PlayAudioFileAction audioAction = new PlayAudioFileAction();
         audioAction.setFilePath(validPath);
 
@@ -28,5 +28,6 @@ class PlayAudioFileActionTest {
 
         assertTrue(audioAction.audioPlayed);
     }
-        }
+
+}
 
