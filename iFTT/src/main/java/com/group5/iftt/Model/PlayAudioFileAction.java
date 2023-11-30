@@ -5,9 +5,11 @@ import javafx.application.Platform;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-public class PlayAudioFileAction implements Action {
+import java.io.Serializable;
+
+public class PlayAudioFileAction implements Action, Serializable {
    private String filePath;
-   public volatile boolean audioPlayed = false;
+   public boolean audioPlayed = false;
 
     public PlayAudioFileAction(){
 

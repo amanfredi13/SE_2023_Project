@@ -4,7 +4,9 @@ import com.group5.iftt.Model.Action;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-public class ShowDialogBoxAction implements Action {
+import java.io.Serializable;
+
+public class ShowDialogBoxAction implements Action, Serializable {
     private String message;
     private volatile boolean dialogShown = false;
 

@@ -4,6 +4,8 @@ import com.group5.iftt.Controller.AddActionController;
 import com.group5.iftt.Model.Action;
 import com.group5.iftt.Model.Rule;
 import com.group5.iftt.Model.RuleService;
+import com.group5.iftt.Model.SerializeList;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.w3c.dom.events.Event;
 
 import java.io.IOException;
 
@@ -38,23 +39,18 @@ public class MainController {
 
     @FXML
     private Button ButtonCancel;
-
-
     ObservableList<Rule> rules = RuleService.getInstance();
 
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         conditionColumn.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
-        actionColumn.setCellValueFactory(cellData -> cellData.getValue().actionProperty()); // specifico come i dati della colonna devono essere ottenuti
+        actionColumn.setCellValueFactory(cellData -> cellData.getValue().actionProperty());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
-        // Configuro la cella della colonna come stato
-        configureStatusCellFactory();
-
+        ObservableList<Rule> ruleList = RuleService.getInstance();
+        ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize("/Users/alessandromanfredi/Desktop/SE_IFTTT/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/AudioPerTest/rules.txt")));
         actionTable.setItems(rules);
-
     }
-
 
     @FXML
     private void addAction() {
@@ -72,7 +68,6 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -85,44 +80,15 @@ public class MainController {
             actionTable.getItems().remove(selectedRule);
             rules.remove(selectedRule);
         }
+        //vado a sovrascivere il file delle regole serializzate
+        ObservableList<Rule> ruleInstance = RuleService.getInstance();
+        SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/Desktop/SE_IFTTT/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/AudioPerTest/rules.txt");
+        ser.serialize();
     }
+    public void cancelAction(Rule rule){rules.remove(rule);}
 
     public void addAction(Rule rule) {
         rules.add(rule);
-    }
-
-    // Metodo per configurare la cella della colonna dello stato
-    private void configureStatusCellFactory(){
-        statusColumn.setCellFactory(tc-> { // specifico come le celle della colonna dovrebbero essere visualizzare o personalizate
-            TableCell<Rule, String> cellData = createCellFactory();
-            // Gestisco il click sulla cella per cambiare stato
-            cellData.setOnMouseClicked(e -> handleStatusCellClick(cellData));
-
-            return cellData;
-
-        });
-    }
-
-    // Metodo per creare la cella della colonna
-    private TableCell<Rule, String> createCellFactory() {
-        return new TableCell<Rule,String>() {
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : item);
-            }
-        };
-    }
-
-    // Metodo per gestire il click sulla cella dello stato
-    private void handleStatusCellClick(TableCell<Rule, String> cellData ) {
-        if (!cellData.isEmpty()) {
-            Rule rule = cellData.getTableRow().getItem();
-            String currentStatus = rule.getStatus();
-            String newStatus = (currentStatus.equals(("Enabled")) ? "Disabled" : "Enabled");
-
-            rule.setStatus(newStatus);
-            cellData.setText(newStatus);
-        }
     }
 
 }

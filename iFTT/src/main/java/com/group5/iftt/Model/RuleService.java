@@ -13,7 +13,6 @@ public final class RuleService {
     public static ObservableList<Rule> getInstance() {
         if(rule_list == null){
              new RuleService();
-
         }
         return rule_list;
     }

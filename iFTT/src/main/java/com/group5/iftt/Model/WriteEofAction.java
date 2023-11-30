@@ -5,10 +5,11 @@ import javafx.application.Platform;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class WriteEofAction implements Action{
+public class WriteEofAction implements Action, Serializable {
 private String filepath;
 private String stringToWrite;
 
