@@ -11,13 +11,9 @@ public class PlayAudioFileAction implements Action, Serializable {
    private String filePath;
    public boolean audioPlayed = false;
 
-    public PlayAudioFileAction(){
-
-    }
-
-
-    public String setFilePath(String filePath){
-       return this.filePath = filePath;
+    public PlayAudioFileAction(){}
+    public PlayAudioFileAction(String filePath){
+        this.filePath = filePath;
     }
 
     public void startAction(){
@@ -35,13 +31,9 @@ public class PlayAudioFileAction implements Action, Serializable {
             clip.start();
             audioPlayed = true;
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-            e.printStackTrace();
             System.err.println("Errore durante la riproduzione dell'audio " + e.getMessage());
         }
     }
-
-
-
     public String toString(){
         return "Riproduzione Audio";
     }

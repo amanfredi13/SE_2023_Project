@@ -15,7 +15,7 @@ public class TimeOfDayTrigger implements Trigger, Serializable {
 
     public boolean isValidate() {
        LocalTime currentTime= LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
-        return currentTime.equals(triggerTime); //confronto tempo inserito dall'utente nel trigger con il tempo attuale
+        return currentTime.equals(triggerTime); //Confronto tempo inserito dall'utente nel trigger con il tempo attuale
     }
 
     public String getTimeofDay(){

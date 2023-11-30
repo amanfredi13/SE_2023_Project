@@ -1,6 +1,4 @@
 package com.group5.iftt.Controller;
-
-import com.group5.iftt.Controller.AddActionController;
 import com.group5.iftt.Model.Action;
 import com.group5.iftt.Model.Rule;
 import com.group5.iftt.Model.RuleService;
@@ -34,11 +32,6 @@ public class MainController {
     @FXML
     private TableColumn<Rule, String> statusColumn;
 
-    @FXML
-    private Button addActionButton;
-
-    @FXML
-    private Button ButtonCancel;
     ObservableList<Rule> rules = RuleService.getInstance();
 
     public void initialize() {
@@ -46,14 +39,12 @@ public class MainController {
         conditionColumn.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
         actionColumn.setCellValueFactory(cellData -> cellData.getValue().actionProperty());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-
         ObservableList<Rule> ruleList = RuleService.getInstance();
         ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize("/Users/alessandromanfredi/Desktop/SE_IFTTT/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/AudioPerTest/rules.txt")));
         actionTable.setItems(rules);
     }
-
     @FXML
-    private void addAction() {
+    private void addRule() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/group5/iftt/AddActionView.fxml"));
             AnchorPane addActionView = loader.load();
@@ -64,30 +55,29 @@ public class MainController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(addActionView));
             stage.showAndWait();
-
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.print("Errore: Impossibile aggiungere azione");
         }
     }
-
     @FXML
     private void cancelAction() {
         // Ottieni l'azione selezionata nella tabella
         Rule selectedRule = actionTable.getSelectionModel().getSelectedItem();
-
         if (selectedRule != null) {
             // Rimuovi l'azione dalla tabella e dalla lista
             actionTable.getItems().remove(selectedRule);
             rules.remove(selectedRule);
         }
-        //vado a sovrascivere il file delle regole serializzate
-        ObservableList<Rule> ruleInstance = RuleService.getInstance();
+        //Sovrascrivo il file delle regole serializzate senza la regola appena eliminata.
+        ObservableList<Rule> ruleInstance = RuleService.getInstance(); //Riserializzo l'Observabile list aggiornata passatomi come Singleton.
         SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/Desktop/SE_IFTTT/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/AudioPerTest/rules.txt");
         ser.serialize();
     }
-    public void cancelAction(Rule rule){rules.remove(rule);}
+    private void handleClose() {
+        System.out.println("Finestra chiusa. Eseguo azioni di chiusura...");
 
-    public void addAction(Rule rule) {
+    }
+    public void addRule(Rule rule) {
         rules.add(rule);
     }
 

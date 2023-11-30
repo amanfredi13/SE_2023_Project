@@ -1,14 +1,12 @@
 package com.group5.iftt.Model;
 
-import javafx.application.Platform;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+//Classe per l'azione di scrittura stringa a fine file
 public class WriteEofAction implements Action, Serializable {
 private String filepath;
 private String stringToWrite;
@@ -18,12 +16,10 @@ public WriteEofAction(String filepath, String stringToWrite){
     this.stringToWrite = stringToWrite;
 
 }
-public WriteEofAction(){
-
+public WriteEofAction(){}
+public void setFilePath(String filePath){
+    this.filepath = filePath;
 }
-public String setFilePath(String filePath){
-    return this.filepath = filePath;
-    }
     @Override
     public void startAction() {
             // Scrivi la stringa alla fine del file

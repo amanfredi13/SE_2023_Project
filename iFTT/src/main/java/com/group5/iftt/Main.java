@@ -16,7 +16,12 @@ public class Main extends Application {
         primaryStage.setTitle("IFTTT's son");
         primaryStage.setScene(new Scene(root, 559, 489));
         primaryStage.show();
-        new CheckRule();
+        CheckRule checkRule = CheckRule.getInstance(); //inizio a controllare le regole
+    }
+    @Override
+    public void stop(){
+        CheckRule threadChecker = CheckRule.getInstance();
+        threadChecker.stopChecking(); //quando chiudo l'applicazione smetto di controllare
     }
 
     public static void main(String[] args) {

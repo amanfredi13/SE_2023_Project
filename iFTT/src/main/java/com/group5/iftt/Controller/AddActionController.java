@@ -88,12 +88,11 @@ public class AddActionController implements Initializable {
 
         if ("Riproduzione Audio".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
-            if (filePath != null && !filePath.isEmpty()) {
-                PlayAudioFileAction playAudioFileAction = new PlayAudioFileAction();
-                playAudioFileAction.setFilePath(filePath);
+            if (!filePath.isEmpty()) {
+                PlayAudioFileAction playAudioFileAction = new PlayAudioFileAction(filePath);
                 rule.setAction(playAudioFileAction);
             } else {
-                showAlert("Errore", "Problema con il caricamento del file audio");
+                showAlert("Errore: ", "Problema con il caricamento del file audio.");
                 return;
             }
         }
@@ -105,12 +104,12 @@ public class AddActionController implements Initializable {
                 editFileAction.setFilePath(filePath);
                 rule.setAction(editFileAction);
             } else {
-                showAlert("Errore", "Problema con il caricamento del file da sovrascrivere");
+                showAlert("Errore: ", "Problema con il caricamento del file da sovrascrivere");
                 return;
             }
         }
 
-        mainController.addAction(rule);
+        mainController.addRule(rule);
         ObservableList<Rule> ruleInstance = RuleService.getInstance();
         SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/Desktop/SE_IFTTT/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/AudioPerTest/rules.txt");
         ser.serialize();

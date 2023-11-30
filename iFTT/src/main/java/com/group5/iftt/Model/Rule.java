@@ -30,20 +30,19 @@ public class Rule implements Serializable{
         this.timeTrigger = new SimpleObjectProperty<>(new TimeOfDayTrigger(hour, minute));
 
     }
-    public Rule(){}
 
-
+    //creo serializzatori per serializzare correttamente gli oggetti di tipo rule
     private void writeObject(ObjectOutputStream out) throws IOException {
 
         out.defaultWriteObject();
-
+        //estraggo attributi oggetto
         String name = this.name.get();
         String condition = this.condition.get();
         Action action = this.action.get();
         String status = this.status.get();
         TimeOfDayTrigger time = this.timeTrigger.get();
 
-
+        //scrivo attributi oggetto
         out.writeObject(name);
         out.writeObject(condition);
         out.writeObject(action);
@@ -54,14 +53,14 @@ public class Rule implements Serializable{
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-
+        //estraggo attributi oggetto leggendo da file binario
         String name = (String) in.readObject();
         String condition = (String) in.readObject();
         Action action = (Action) in.readObject();
         String status = (String) in.readObject();
         TimeOfDayTrigger time = (TimeOfDayTrigger) in.readObject();
         Boolean actionstarted = (Boolean) in.readObject();
-
+        //setto gli attributi letti nei rispettivi campi dell'oggetto
         this.name = new SimpleStringProperty(name);
         this.condition = new SimpleStringProperty(condition);
         this.action = new SimpleObjectProperty<>(action);
@@ -70,9 +69,6 @@ public class Rule implements Serializable{
         this.actionStarted = actionstarted;
 
     }
-
-
-
 
     public TimeOfDayTrigger getTimeTrigger(){
         return timeTrigger.get();

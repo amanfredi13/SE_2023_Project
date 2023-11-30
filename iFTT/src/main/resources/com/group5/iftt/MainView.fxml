@@ -16,8 +16,8 @@
                 <TableColumn fx:id="statusColumn" prefWidth="107.5" text="State" />
             </columns>
         </TableView>
-        <Button fx:id="addActionButton" layoutX="480.0" layoutY="449.0" onAction="#addAction" text="Add rule" />
+        <Button layoutX="480.0" layoutY="449.0" onAction="#addRule" text="Add rule" />
       <Text layoutX="246.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IFTTT's son" />
-      <Button fx:id="ButtonCancel" layoutX="407.0" layoutY="449.0" onAction="#cancelAction" text="Cancel" />
+      <Button layoutX="407.0" layoutY="449.0" onAction="#cancelAction" text="Cancel" />
     </children>
 </AnchorPane>
