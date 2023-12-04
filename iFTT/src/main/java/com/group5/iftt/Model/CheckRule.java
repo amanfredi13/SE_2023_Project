@@ -39,7 +39,7 @@ public class CheckRule {
     }
   */
 
-    private CheckRule() {
+    CheckRule() {
         // Esegui il controllo ogni secondo
         scheduler.scheduleAtFixedRate(this::check, 0, 1, TimeUnit.SECONDS);
     }

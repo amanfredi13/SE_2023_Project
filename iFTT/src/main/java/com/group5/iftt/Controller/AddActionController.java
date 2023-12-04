@@ -111,7 +111,7 @@ public class AddActionController implements Initializable {
 
         mainController.addRule(rule);
         ObservableList<Rule> ruleInstance = RuleService.getInstance();
-        SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/Desktop/SE_IFTTT/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/AudioPerTest/rules.txt");
+        SerializeList ser = new SerializeList(ruleInstance, "/C:/Users/admin/IdeaProjects/Proj2/src/main/resources/pro2/proj2/recordAle.txt");
         ser.serialize();
         cancel();
     }

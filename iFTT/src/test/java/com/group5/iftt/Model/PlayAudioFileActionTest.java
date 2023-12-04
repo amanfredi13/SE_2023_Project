@@ -1,33 +1,49 @@
 package com.group5.iftt.Model;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayAudioFileActionTest {
-    private  String validPath = "/com/group5/iftt/AudioPerTest/notifica.wav";
 
-    @Test  //Test per assicurarci che il file path venga preso correttamente
-    public void setFilePath() {
-        PlayAudioFileAction audioAction = new PlayAudioFileAction();
-        assertEquals(validPath, audioAction.setFilePath(validPath));
-    }
+    @Test
+    void audioAction_PlaysAudioWithoutExceptions() {
+        // Specifica il percorso del file audio di test
+        String validPath = "notifica.wav";
 
-    @Test //Test riproduzione audio
-    public void ValidAudioFilePlaysAudio() {
-        PlayAudioFileAction audioAction = new PlayAudioFileAction();
-        audioAction.setFilePath(validPath);
+        // Crea un'istanza di PlayAudioFileAction con il percorso specificato
+        PlayAudioFileAction audioAction = new PlayAudioFileAction(validPath);
 
+        // Verifica che l'azione audio non lanci eccezioni
         assertDoesNotThrow(() -> audioAction.audioAction(), "Expected no exception to be thrown");
 
-        assertTrue(audioAction.audioPlayed);
+        // Verifica che la variabile audioPlayed sia impostata su true dopo l'azione
+        assertTrue(audioAction.audioPlayed, "Expected audio to be played");
     }
 
+    @Test
+    void startAction_PlaysAudioWithoutExceptions() {
+        // Specifica il percorso del file audio di test
+        String validPath = "notifica.wav";
+
+        // Crea un'istanza di PlayAudioFileAction con il percorso specificato
+        PlayAudioFileAction audioAction = new PlayAudioFileAction(validPath);
+
+        // Verifica che l'azione audio non lanci eccezioni
+        assertDoesNotThrow(() -> audioAction.startAction(), "Expected no exception to be thrown");
+
+        // Verifica che la variabile audioPlayed sia impostata su true dopo l'azione
+        assertTrue(audioAction.audioPlayed, "Expected audio to be played");
+    }
+
+    @Test
+    void toString_ReturnsCorrectString() {
+        // Crea un'istanza di PlayAudioFileAction senza specificare il percorso
+        PlayAudioFileAction audioAction = new PlayAudioFileAction();
+
+        // Verifica che il metodo toString restituisca la stringa corretta
+        assertEquals("Riproduzione Audio", audioAction.toString(), "Expected correct string representation");
+    }
 }
 

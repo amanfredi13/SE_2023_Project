@@ -10,13 +10,13 @@ class CheckRuleTest {
 
     @Before
     public void setUp() {
-        // Inizializza la tua classe CheckRule prima di ogni test
+        // Inizializzazione della classe CheckRule prima di ogni test
         checkRule = new CheckRule();
     }
 
     @Test
     public void testCheckRule() throws InterruptedException {
-        // Attendi per un certo periodo di tempo (ad esempio, 5 secondi) per permettere l'esecuzione dei controlli
+        // Attendere per un certo periodo di tempo (ad esempio, 5 secondi) per permettere l'esecuzione dei controlli
         TimeUnit.SECONDS.sleep(5);
 
         // Verifica che il test abbia avuto successo senza errori

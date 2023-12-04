@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Rule implements Serializable{
 
@@ -134,6 +135,38 @@ public class Rule implements Serializable{
     public boolean isActive(){
         return "Enabled".equals(status.get());
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Rule otherRule = (Rule) obj;
+        // Confronta i campi StringProperty
+        if (!Objects.equals(this.name.get(), otherRule.name.get())) return false;
+        if (!Objects.equals(this.condition.get(), otherRule.condition.get())) return false;
+        if (!Objects.equals(this.status.get(), otherRule.status.get())) return false;
+
+        // Confronta i campi ObjectProperty
+        if (!Objects.equals(this.action.get(), otherRule.action.get())) return false;
+
+        // Confronta i campi TimeOfDayTrigger
+        if (!Objects.equals(this.timeTrigger.getValue().toString(), otherRule.timeTrigger.getValue().toString())) return false;
+
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Rule{" +
+                "name=" + name.get() +
+                ", condition=" + condition.get() +
+                ", action=" + action.get() +
+                ", status=" + status.get() +
+                ", timeTrigger=" + timeTrigger.getValue().toString() +
+                '}';
+    }
+
 
 }
 

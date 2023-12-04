@@ -1,5 +1,7 @@
 package com.group5.iftt.Model;
 //Interfaccia che implementeranno tutte le azioni
-public interface Action{
+import java.io.Serializable;
+
+public interface Action extends Serializable {
     public void startAction();
 }
