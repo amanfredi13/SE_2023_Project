@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -35,6 +36,8 @@ public class AddActionController implements Initializable {
     @FXML
     private Label fileNameLabel;
     private File selectedFile;
+    private String selectedPath;
+
     @FXML
     private TextArea messageTextArea;
     private String filePath;
@@ -42,11 +45,12 @@ public class AddActionController implements Initializable {
     private Button cancelButton;
     @FXML
     private TextField textFieldWriteFile;
+    @FXML
+    private Button pathDestButton;
+    @FXML
+    private Label pathDestLabel;
 
 
-    public void setFileNameLabel(Label fileNameLabel) {
-        this.fileNameLabel = fileNameLabel;
-    }
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
@@ -96,35 +100,53 @@ public class AddActionController implements Initializable {
                 return;
             }
         }
+        if("Copia File".equals(selectedAction.toString())){
+            String filePath = selectedFile.getAbsolutePath();
+            String filePathDestination = selectedPath;
+            if (filePathDestination != null && !filePathDestination.isEmpty()) {
+                FileCopyAction fileCopyAction = new FileCopyAction(filePath, filePathDestination);
+                fileCopyAction.setCopyFile(filePath, filePathDestination);
+                rule.setAction(fileCopyAction);
+            } else {
+                showAlert("Errore: ", "Problema con il file da copiare");
+                return;
+            }
+        }
+
+        if("Sposta File".equals(selectedAction.toString())){
+            String filePath = selectedFile.getAbsolutePath();
+            String filePathDestination = selectedPath;
+            if (filePathDestination != null && !filePathDestination.isEmpty()) {
+                FileMoveAction fileMoveAction = new FileMoveAction(filePath, filePathDestination);
+                fileMoveAction.setMoveFile(filePath, filePathDestination);
+                rule.setAction(fileMoveAction);
+            } else {
+                showAlert("Errore: ", "Problema con il file da copiare");
+                return;
+            }
+        }
+        if("Elimina File".equals(selectedAction.toString())) {
+            String filePath = selectedFile.getAbsolutePath();
+            FileDeleteAction fileDeleteAction = new FileDeleteAction(filePath);
+            fileDeleteAction.setFilePath(filePath);
+            rule.setAction(fileDeleteAction);
+        }
+
         if("Scrittura EOF".equals(selectedAction.toString())){
             String writeString = textFieldWriteFile.getText();
             String filePath = selectedFile.getAbsolutePath();
             if (filePath != null && !filePath.isEmpty()) {
                 WriteEofAction editFileAction = new WriteEofAction(filePath,writeString);
-                //editFileAction.setFilePath(filePath);
+                editFileAction.setFilePath(filePath);
                 rule.setAction(editFileAction);
             } else {
                 showAlert("Errore: ", "Problema con il caricamento del file da sovrascrivere");
                 return;
             }
         }
-        if("Esegui Script".equals(selectedAction.toString())){
-            String parameters = textFieldWriteFile.getText();
-            String filePath = selectedFile.getAbsolutePath();
-            if (filePath != null && !filePath.isEmpty()) {
-                //WriteEofAction editFileAction = new WriteEofAction(filePath,writeString);
-                ExecuteProgramAction executeProgramAction = new ExecuteProgramAction(filePath, parameters);
-                //executeProgramAction.setFilePath(filePath);
-                rule.setAction(executeProgramAction);
-            } else {
-                showAlert("Errore: ", "Problema con il caricamento del file da sovrascrivere");
-                return;
-            }
-        }
-
         mainController.addRule(rule);
         ObservableList<Rule> ruleInstance = RuleService.getInstance();
-        SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/IdeaProjects/SE_2023_Project_rev/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
+        SerializeList ser = new SerializeList(ruleInstance, "/C:/Users/admin/IdeaProjects/Proj2/src/main/resources/pro2/proj2/recordAle.txt");
         ser.serialize();
         cancel();
     }
@@ -140,7 +162,7 @@ public class AddActionController implements Initializable {
 
         //inizializzazione comboBox che permettono di customizzare la regola in base alle diverse operazioni possibili
         triggerComboBox.setItems(FXCollections.observableArrayList("Ora del giorno"));
-        actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction(), new WriteEofAction(), new ExecuteProgramAction()));
+        actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction(), new WriteEofAction(), new FileCopyAction(), new FileMoveAction(), new FileDeleteAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
         comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05","06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
         comboBoxMinute.setItems(FXCollections.observableArrayList("00","01", "02", "03", "04", "05","06","07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"));
@@ -148,6 +170,8 @@ public class AddActionController implements Initializable {
         comboBoxMinute.setVisible(false);
         loadFileButton.setVisible(false);
         textFieldWriteFile.setVisible(false);
+        pathDestButton.setVisible(false);
+
 
         //Le diverse comboBox effettueranno il displacement dei rispettibi bottoni o comboBox per permettere la customizzazione dell'azione
         triggerComboBox.valueProperty().addListener(new ChangeListener<String>() {
@@ -176,24 +200,36 @@ public class AddActionController implements Initializable {
                     loadFileButton.setVisible(true);
                     messageTextArea.setVisible(false);
                     textFieldWriteFile.setVisible(false);
+                    pathDestButton.setVisible(false);
                 } else if (newValue instanceof ShowDialogBoxAction) {
                     loadFileButton.setVisible(false);
                     messageTextArea.setVisible(true);
                     textFieldWriteFile.setVisible(false);
-                } else if (newValue instanceof WriteEofAction){
+                    pathDestButton.setVisible(false);
+                } else if (newValue instanceof WriteEofAction) {
                     loadFileButton.setText("Load File");
                     loadFileButton.setVisible(true);
                     textFieldWriteFile.setVisible(true);
                     messageTextArea.setVisible(false);
-                }else if (newValue instanceof ExecuteProgramAction){
-                    loadFileButton.setText("Choose Script");
+                    pathDestButton.setVisible(false);
+                } else if (newValue instanceof FileCopyAction || newValue instanceof FileMoveAction) {
+                    loadFileButton.setText("Load File");
                     loadFileButton.setVisible(true);
-                    textFieldWriteFile.setVisible(true);
                     messageTextArea.setVisible(false);
-                }else {
+                    textFieldWriteFile.setVisible(false);
+                    pathDestButton.setVisible(true);
+                }else if( newValue instanceof  FileDeleteAction){
+                    loadFileButton.setText("Load File");
+                    loadFileButton.setVisible(true);
+                    messageTextArea.setVisible(false);
+                    textFieldWriteFile.setVisible(false);
+                    pathDestButton.setVisible(false);
+                }
+                else {
                     // Altrimenti, rendi invisibile il bottone
                     loadFileButton.setVisible(false);
                     textFieldWriteFile.setVisible(false);
+                    pathDestButton.setVisible(false);
                 }
             }
         });
@@ -212,11 +248,9 @@ public class AddActionController implements Initializable {
         if("Scrittura EOF".equals(actionComboBox.getValue())) {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di testo", "*.txt"));
         }
-        if("Esegui Script".equals(actionComboBox.getValue())) {
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Script Path", "*.sh"));
-        }
-        // Mostra la finestra di dialogo per la selezione del file
-            selectedFile = fileChooser.showOpenDialog(new Stage());
+       // Mostra la finestra di dialogo per la selezione del file
+            selectedFile = fileChooser.showOpenDialog(new Stage());////////////////////////*****************
+
 
         // Chiamare un metodo per aggiornare la Label con il nome del file selezionato
             updateFileNameLabel();
@@ -236,6 +270,22 @@ public class AddActionController implements Initializable {
             filePath = null;
         }
     }
+    @FXML
+    private void openDirectoryChooser(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Seleziona una cartella di destinazione");
+
+        // Mostra la finestra di dialogo della cartella di destinazione
+        File selectedDirectory = directoryChooser.showDialog(new Stage());
+
+        // Aggiorna la label
+        if (selectedDirectory != null) {
+            selectedPath = selectedDirectory.getAbsolutePath();
+            pathDestLabel.setText(selectedPath);
+        }
+    }
+
+
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
