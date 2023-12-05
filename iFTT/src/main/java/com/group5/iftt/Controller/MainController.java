@@ -40,7 +40,7 @@ public class MainController {
         actionColumn.setCellValueFactory(cellData -> cellData.getValue().actionProperty());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         ObservableList<Rule> ruleList = RuleService.getInstance();
-        ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize("/C:/Users/admin/IdeaProjects/Proj2/src/main/resources/pro2/proj2/recordAle.txt")));
+        ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize("/Users/alessandromanfredi/IdeaProjects/SE_2023_Project_rev/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt")));
         actionTable.setItems(rules);
     }
     @FXML
@@ -70,7 +70,7 @@ public class MainController {
         }
         //Sovrascrivo il file delle regole serializzate senza la regola appena eliminata.
         ObservableList<Rule> ruleInstance = RuleService.getInstance(); //Riserializzo l'Observabile list aggiornata passatomi come Singleton.
-        SerializeList ser = new SerializeList(ruleInstance, "/C:/Users/admin/IdeaProjects/Proj2/src/main/resources/pro2/proj2/recordAle.txt");
+        SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/IdeaProjects/SE_2023_Project_rev/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
         ser.serialize();
     }
     private void handleClose() {
