@@ -11,7 +11,7 @@
         <TableView fx:id="actionTable" layoutX="9.0" layoutY="35.0" prefHeight="372.0" prefWidth="539.0">
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="111.5" text="Rule Name" />
-                <TableColumn fx:id="conditionColumn" prefWidth="159.0" text="Condition" />
+                <TableColumn fx:id="triggerColumn" prefWidth="159.0" text="Trigger" />
                 <TableColumn fx:id="actionColumn" prefWidth="160.0" text="Action" />
                 <TableColumn fx:id="statusColumn" prefWidth="107.5" text="State" />
             </columns>

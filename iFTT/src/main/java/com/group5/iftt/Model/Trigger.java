@@ -1,5 +1,7 @@
 package com.group5.iftt.Model;
 
-public interface Trigger {
+import java.io.Serializable;
+
+public interface Trigger extends Serializable {
 public boolean isValidate();
 }

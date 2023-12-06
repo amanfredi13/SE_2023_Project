@@ -1,8 +1,5 @@
 package com.group5.iftt.Controller;
-import com.group5.iftt.Model.Action;
-import com.group5.iftt.Model.Rule;
-import com.group5.iftt.Model.RuleService;
-import com.group5.iftt.Model.SerializeList;
+import com.group5.iftt.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,26 +16,23 @@ public class MainController {
 
     @FXML
     private TableView<Rule> actionTable;
-
     @FXML
     private TableColumn<Rule, String> nameColumn;
-
     @FXML
-    private TableColumn<Rule, String> conditionColumn;
-
+    private TableColumn<Rule, Trigger> triggerColumn;
     @FXML
     private TableColumn<Rule, Action> actionColumn;
-
     @FXML
     private TableColumn<Rule, String> statusColumn;
-
     ObservableList<Rule> rules = RuleService.getInstance();
 
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        conditionColumn.setCellValueFactory(cellData -> cellData.getValue().conditionProperty());
+        triggerColumn.setCellValueFactory(cellData -> cellData.getValue().triggerProperty());
         actionColumn.setCellValueFactory(cellData -> cellData.getValue().actionProperty());
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+
+        //Deserializzazione e caricamento dati nella tabella
         ObservableList<Rule> ruleList = RuleService.getInstance();
         ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize("/Users/alessandromanfredi/IdeaProjects/SE_2023_Project_rev/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt")));
         actionTable.setItems(rules);
@@ -51,12 +45,12 @@ public class MainController {
             AddActionController addActionController = loader.getController();
             addActionController.setMainController(this);
             Stage stage = new Stage();
-            stage.setTitle("Aggiungi azione");
+            stage.setTitle("Aggiungi Regola");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(addActionView));
             stage.showAndWait();
         } catch (IOException e) {
-            System.out.print("Errore: Impossibile aggiungere azione");
+            System.out.print("Errore: Impossibile aggiungere Regola");
         }
     }
     @FXML

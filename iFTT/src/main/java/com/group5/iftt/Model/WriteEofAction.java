@@ -17,9 +17,12 @@ public WriteEofAction(String filepath, String stringToWrite){
 
 }
 public WriteEofAction(){}
-public void setFilePath(String filePath){
+/*
+    public void setFilePath(String filePath){
     this.filepath = filePath;
 }
+
+ */
     @Override
     public void startAction() {
             // Scrivi la stringa alla fine del file

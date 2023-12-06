@@ -1,8 +1,9 @@
 package com.group5.iftt.Model;
 import java.io.IOException;
+import java.io.Serializable;
 
 
-public class ExecuteProgramAction implements Action{
+public class ExecuteProgramAction implements Action, Serializable {
     private String programPath;
     private String parameters;
 

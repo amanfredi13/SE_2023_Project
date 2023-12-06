@@ -8,16 +8,22 @@ import java.util.Objects;
 
 public class TimeOfDayTrigger implements Trigger, Serializable {
     private  LocalTime triggerTime;
-
+    private String hour;
+    private String minute;
     public TimeOfDayTrigger(String hour, String minute) {
+        this.hour = hour;
+        this.minute = minute;
         this.triggerTime = LocalTime.parse(hour+ ":" + minute); //formatto correttamente l'orario dell'utente oer poterlo confrontare
     }
     @Override
+    /*
     public String toString() {
         return triggerTime.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
-
-
+     */
+    public String toString(){
+        return "Ora del giorno";
+    }
     public TimeOfDayTrigger(){}
 
     public boolean isValidate() {

@@ -11,13 +11,13 @@
         <TableView fx:id="actionTable" layoutX="9.0" layoutY="35.0" prefHeight="372.0" prefWidth="539.0">
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="111.5" text="Rule Name" />
-                <TableColumn fx:id="conditionColumn" prefWidth="159.0" text="Condition" />
+                <TableColumn fx:id="triggerColumn" prefWidth="159.0" text="Trigger" />
                 <TableColumn fx:id="actionColumn" prefWidth="160.0" text="Action" />
                 <TableColumn fx:id="statusColumn" prefWidth="107.5" text="State" />
             </columns>
         </TableView>
-        <Button fx:id="addActionButton" layoutX="480.0" layoutY="449.0" onAction="#addAction" text="Add rule" />
+        <Button layoutX="480.0" layoutY="449.0" onAction="#addRule" text="Add rule" />
       <Text layoutX="246.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IFTTT's son" />
-      <Button fx:id="ButtonCancel" layoutX="407.0" layoutY="449.0" onAction="#cancelAction" text="Cancel" />
+      <Button layoutX="407.0" layoutY="449.0" onAction="#cancelAction" text="Cancel" />
     </children>
 </AnchorPane>
