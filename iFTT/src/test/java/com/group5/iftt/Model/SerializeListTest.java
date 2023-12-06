@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,53 +16,50 @@ class SerializeListTest {
     private SerializeList serializeList;
     private String testFilePath = "testSerializeList.txt";
 
-
-
     @BeforeEach
     void setUp() {
-        // Inizializzazione della lista di regole per il test
+        // Initialization of the rule list for the test
         ruleList = FXCollections.observableArrayList(
-                new Rule("Rule1", "Condition1", new PlayAudioFileAction(), "Enabled", "10", "30"),
-                new Rule("Rule2", "Condition2", new PlayAudioFileAction(), "Enabled", "17", "30")
-
+                new Rule("Rule1", new PlayAudioFileAction(), new TimeOfDayTrigger("10", "30"), "Enabled"),
+                new Rule("Rule2", new PlayAudioFileAction(), new TimeOfDayTrigger("17", "30"), "Enabled")
         );
 
-        // Percorso del file di test
+        // File path for the test
         serializeList = new SerializeList(ruleList, testFilePath);
     }
 
     @Test
     void serializeAndDeserialize() {
-        // Serializzazione
+        // Serialization
         serializeList.serialize();
 
-        // Verifica che il file di output esista
+        // Check that the output file exists
         File outputFile = new File(testFilePath);
         assertTrue(outputFile.exists());
 
-        // Deserializzazione
+        // Deserialization
         List<Rule> deserializedList = SerializeList.deserialize(testFilePath);
 
-        // Verifica che la lista deserializzata non sia nulla
+        // Check that the deserialized list is not null
         assertNotNull(deserializedList);
 
-
+        // Check each rule in the list
         for (int i = 0; i < ruleList.size(); i++) {
-                Rule originalRule = ruleList.get(i);
-                Rule deserializedRule = deserializedList.get(i);
+            Rule originalRule = ruleList.get(i);
+            Rule deserializedRule = deserializedList.get(i);
 
-                // Stampa il prima e dopo del confronto
-                System.out.println("Original Rule: " + originalRule);
-                System.out.println("Deserialized Rule: " + deserializedRule);
+            // Print before and after the comparison
+            System.out.println("Original Rule: " + originalRule);
+            System.out.println("Deserialized Rule: " + deserializedRule);
 
-                // Confronto
-                if (originalRule.toString().equals(deserializedRule.toString())) {
-                    System.out.println("Rules at index " + i + " are equal!");
-                } else {
-                    assertEquals(originalRule.toString(), deserializedRule.toString(),
-                            "Details don't match for Rule at index " + i);
-                }
+            // Confronto
+            if (originalRule.toString().equals(deserializedRule.toString())) {
+                System.out.println("Rules at index " + i + " are equal!");
+            } else {
+                assertEquals(originalRule.toString(), deserializedRule.toString(),
+                        "Details don't match for Rule at index " + i);
+            }
+
         }
-
     }
 }

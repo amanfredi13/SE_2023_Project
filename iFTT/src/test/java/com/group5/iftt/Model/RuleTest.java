@@ -6,42 +6,53 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RuleTest {
 
-
     @Test
     public void testSettersAndGetters() {
-        Action action1 = new MockAction();
-        Action action2 = new MockAction();
-        TimeOfDayTrigger timeTrigger1 = new TimeOfDayTrigger("12", "30");
-        TimeOfDayTrigger timeTrigger2 = new TimeOfDayTrigger("14", "45");
+        Action action1 = new ShowDialogBoxAction();
+        Action action2 = new ShowDialogBoxAction();
+        Trigger trigger1 = new TimeOfDayTrigger("12", "30");
+        Trigger trigger2 = new TimeOfDayTrigger("14", "45");
 
-        Rule rule = new Rule("TestRule", "TestCondition", action1, "Enabled", "12", "30");
+        Rule rule = new Rule("TestRule", action1, trigger1, "Enabled");
+
+        System.out.println("Original Rule:\n" + rule);
 
         rule.setName("UpdatedName");
-        rule.setCondition("UpdatedCondition");
         rule.setAction(action2);
+        rule.setTrigger(trigger2);
         rule.setStatus("Disabled");
-        rule.setTimeTrigger(timeTrigger2);
+
+        System.out.println("Updated Rule:\n" + rule);
 
         assertEquals("UpdatedName", rule.getName());
-        assertEquals("UpdatedCondition", rule.getCondition());
         assertEquals(action2, rule.getAction());
+        assertEquals(trigger2, rule.getTrigger());
         assertEquals("Disabled", rule.getStatus());
-        assertEquals(timeTrigger2, rule.getTimeTrigger());
         assertFalse(rule.isActive());
+
+        // Print success message
+        System.out.println("testSettersAndGetters passed successfully!\n");
     }
 
     @Test
     public void testActionStarted() {
-        Rule rule = new Rule("TestRule", "TestCondition", new MockAction(), "Enabled", "12", "30");
+        Rule rule = new Rule("TestRule", new ShowDialogBoxAction(), new TimeOfDayTrigger("12", "30"), "Enabled");
         assertFalse(rule.isActionStarted());
+
+        System.out.println("Rule before setting ActionStarted:\n" + rule.toString());
+
         rule.setActionStarted(true);
         assertTrue(rule.isActionStarted());
+
+        System.out.println("Rule after setting ActionStarted to true:\n" + rule.toString());
+
         rule.setActionStarted(false);
         assertFalse(rule.isActionStarted());
+
+        System.out.println("Rule after setting ActionStarted to false:\n" + rule.toString());
+
+        // Print success message
+        System.out.println("testActionStarted passed successfully!\n");
     }
 
-    private static class MockAction implements Action {
-        @Override
-        public void startAction() {}
-    }
 }
