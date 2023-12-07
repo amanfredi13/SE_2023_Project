@@ -40,6 +40,14 @@ public class FileCopyAction implements Action, Serializable {
             System.err.println("Errore durante la copia del file: " + e.getMessage());
         }
     }
+
+    public String getSourceFilePath() {
+        return sourceFilePath;
+    }
+
+    public String getDestinationFolderPath() {
+        return destinationFolderPath;
+    }
     public String toString(){
         return "Copia File";
     }

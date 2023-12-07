@@ -44,5 +44,13 @@ public class FileMoveAction implements Action, Serializable {
     public String toString() {
         return "Sposta File";
     }
+
+    public String getSourceFilePath() {
+    return sourceFilePath;
+    }
+
+    public String getDestinationFolderPath() {
+        return destinationFolderPath;
+    }
 }
 

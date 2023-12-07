@@ -37,4 +37,8 @@ public class FileDeleteAction implements Action, Serializable {
     public String toString() {
         return "Elimina File";
     }
+
+    public String getFilePath() {
+        return filePath;
+    }
 }
