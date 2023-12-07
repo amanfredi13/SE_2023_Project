@@ -14,11 +14,11 @@ public class FileStateTrigger implements Trigger, Serializable {
     public FileStateTrigger(){}
     public String toString(){ return "Esistenza File";}
 
-
-
     @Override
     public boolean isValidate() {
+        //Costruisco il path dato dalla somma della cartella in cui cercare il file + carattere separatore (cambia a seconda del sistema operativo) + nome del file
         String percorsoCompleto = filepathDir + File.separator + filename;
+        //Se tale percorso esiste porta a un file mi viene restituito true
         File file = new File(percorsoCompleto);
         return file.exists();
     }
