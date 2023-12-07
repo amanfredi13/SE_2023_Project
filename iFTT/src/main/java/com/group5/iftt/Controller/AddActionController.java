@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 public class AddActionController implements Initializable {
     @FXML
@@ -27,7 +28,7 @@ public class AddActionController implements Initializable {
     @FXML
     private ComboBox statusComboBox;
     @FXML
-    private ComboBox comboBoxOra;
+    private ComboBox comboBox1;
     @FXML
     private ComboBox comboBoxMinute;
     @FXML
@@ -46,6 +47,9 @@ public class AddActionController implements Initializable {
     private Button checkFileButton;
     @FXML
     private Button pathDestButton;
+    @FXML
+    private DatePicker calendar;
+
 
     private String selectedPath;
     private File SelectedFile;
@@ -60,40 +64,62 @@ public class AddActionController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //inizializzazione comboBox che permettono di customizzare la regola in base alle diverse operazioni possibili
-        triggerComboBox.setItems(FXCollections.observableArrayList(new TimeOfDayTrigger(), new FileStateTrigger() ));
+        triggerComboBox.setItems(FXCollections.observableArrayList(new TimeOfDayTrigger(), new FileStateTrigger(), new DayOfWeekTrigger(), new DayOfMonthTrigger(), new SpecificDateTrigger()));
         actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction(), new WriteEofAction(), new ExecuteProgramAction(), new FileCopyAction(), new FileMoveAction(), new FileDeleteAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
-        comboBoxOra.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
         comboBoxMinute.setItems(FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"));
-        comboBoxOra.setVisible(false);
+        comboBox1.setVisible(false);
         comboBoxMinute.setVisible(false);
         checkFileButton.setVisible(false);
         loadFileButton.setVisible(false);
         textFieldWriteFile.setVisible(false);
         messageTextArea.setVisible(false);
         pathDestButton.setVisible(false);
+        calendar.setVisible(false);
 
         //Le diverse comboBox effettueranno il displacement dei rispettibi bottoni o comboBox per permettere la customizzazione dell'azione
         triggerComboBox.valueProperty().addListener(new ChangeListener<Trigger>() {
             @Override
             public void changed(ObservableValue<? extends Trigger> observable, Trigger oldValue, Trigger newValue){
                 if (newValue instanceof TimeOfDayTrigger) {
-                    comboBoxOra.setVisible(true);
+                    comboBox1.setVisible(true);
+                    comboBox1.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
                     comboBoxMinute.setVisible(true);
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
+                    calendar.setVisible(false);
+
+                    //comboBox1.getEditor().setPromptText("Hour");
                 }if (newValue instanceof FileStateTrigger) {
                     checkFileButton.setVisible(true);
                     checkFileButton.setText("Load Directory");
                     messageTextArea.setVisible(true);
-                    comboBoxOra.setVisible(false);
+                    comboBox1.setVisible(false);
                     comboBoxMinute.setVisible(false);
-                } else {
-                    // Altrimenti, rendi invisibile il resto
+                    calendar.setVisible(false);
 
+                } else if (newValue instanceof DayOfWeekTrigger) {
+                    comboBox1.setVisible(true);
+                    comboBox1.setItems(FXCollections.observableArrayList("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"));
+                    //comboBox1.getEditor().setPromptText("Day");
+                    checkFileButton.setVisible(false);
+                    messageTextArea.setVisible(false);
+                    calendar.setVisible(false);
 
+                }else if (newValue instanceof  DayOfMonthTrigger){
+                    comboBox1.setVisible(true);
+                    comboBox1.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"));
+                    //comboBox1.getEditor().setPromptText("Day");
+                    checkFileButton.setVisible(false);
+                    messageTextArea.setVisible(false);
+                    calendar.setVisible(false);
 
-
+                }else if( newValue instanceof SpecificDateTrigger ){
+                    calendar.setVisible(true);
+                    checkFileButton.setVisible(false);
+                    messageTextArea.setVisible(false);
+                    comboBox1.setVisible(false);
+                    comboBoxMinute.setVisible(false);
                 }
 
             }
@@ -168,17 +194,33 @@ public class AddActionController implements Initializable {
         }
 
 
-        //verificare di aver inseirto un nome dopo
+        //verificare di aver inserito un nome dopo
         rule.setName(nameTextField.getText());
 
         //COSTRUZIONE TRIGGER
         if ("Ora del giorno".equals(selectedTrigger.toString())) {
-            String selectedHour = comboBoxOra.getValue().toString();
+            String selectedHour = comboBox1.getValue().toString();
             String selectedMinute = comboBoxMinute.getValue().toString();
             TimeOfDayTrigger timeOfDayTrigger = new TimeOfDayTrigger(selectedHour, selectedMinute);
             rule.setTrigger(timeOfDayTrigger);
         }
 
+        if ("Giorno della settimana".equals(selectedTrigger.toString())){
+            String selectedDayWeek= comboBox1.getValue().toString();
+            DayOfWeekTrigger dayOfWeekTrigger= new DayOfWeekTrigger(selectedDayWeek);
+            rule.setTrigger(dayOfWeekTrigger);
+        }
+
+        if("Giorno del mese".equals(selectedTrigger.toString())){
+            String selectedDayMonth= comboBox1.getValue().toString();
+            DayOfMonthTrigger dayOfMonthTrigger= new DayOfMonthTrigger(selectedDayMonth);
+            rule.setTrigger(dayOfMonthTrigger);
+        }
+        if("Giorno specifico".equals(selectedTrigger.toString())){
+            LocalDate localDate= calendar.getValue();
+            SpecificDateTrigger specificDateTrigger= new SpecificDateTrigger(localDate);
+            rule.setTrigger(specificDateTrigger);
+        }
         //COSTRUZIONE ACTION
         if ("Avviso popup".equals(selectedAction.toString())) {
             String userMessage = messageTextArea.getText();
