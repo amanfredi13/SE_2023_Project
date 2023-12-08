@@ -3,20 +3,16 @@ import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Rule implements Serializable{
+public class Rule implements Serializable {
     private transient StringProperty name;
     private transient ObjectProperty<Trigger> trigger;
     private transient ObjectProperty<Action> action;
     private transient StringProperty status;
     private boolean actionStarted = false;
-    public boolean isActionStarted(){
-        return actionStarted;
-    }
-    public void setActionStarted(boolean actionStarted){
-        this.actionStarted = actionStarted;
-    }
+
 
     public Rule(String name,Action action, Trigger trigger, String status){
         this.name = new SimpleStringProperty(name);
@@ -41,6 +37,7 @@ public class Rule implements Serializable{
         Action action = this.action.get();
         Trigger trigger = this.trigger.get();
         String status = this.status.get();
+
 
 
 
@@ -75,7 +72,6 @@ public class Rule implements Serializable{
         return  trigger.get().isValidate();
     }
 
-
     public String getName() {
         return name.get();
     }
@@ -102,7 +98,12 @@ public class Rule implements Serializable{
         this.status.set(status);
     }
 
-
+    public boolean isActionStarted(){
+        return actionStarted;
+    }
+    public void setActionStarted(boolean actionStarted){
+        this.actionStarted = actionStarted;
+    }
     public StringProperty nameProperty() {
         return name;
     }

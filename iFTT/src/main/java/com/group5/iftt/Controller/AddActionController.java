@@ -49,12 +49,12 @@ public class AddActionController implements Initializable {
     private Button pathDestButton;
     @FXML
     private DatePicker calendar;
+
+
     private String selectedPath;
     private File SelectedFile;
     @FXML
     private Label pathDestLabel;
-    @FXML
-    private TextField fileToFindTrigger;
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -76,7 +76,6 @@ public class AddActionController implements Initializable {
         messageTextArea.setVisible(false);
         pathDestButton.setVisible(false);
         calendar.setVisible(false);
-        fileToFindTrigger.setVisible(false);
 
         //Le diverse comboBox effettueranno il displacement dei rispettibi bottoni o comboBox per permettere la customizzazione dell'azione
         triggerComboBox.valueProperty().addListener(new ChangeListener<Trigger>() {
@@ -89,16 +88,15 @@ public class AddActionController implements Initializable {
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
                     calendar.setVisible(false);
-                    fileToFindTrigger.setVisible(false);
+
                     //comboBox1.getEditor().setPromptText("Hour");
                 }if (newValue instanceof FileStateTrigger) {
                     checkFileButton.setVisible(true);
                     checkFileButton.setText("Load Directory");
-                    fileToFindTrigger.setVisible(true);
+                    messageTextArea.setVisible(true);
                     comboBox1.setVisible(false);
                     comboBoxMinute.setVisible(false);
                     calendar.setVisible(false);
-                    messageTextArea.setVisible(false);
 
                 } else if (newValue instanceof DayOfWeekTrigger) {
                     comboBox1.setVisible(true);
@@ -107,7 +105,6 @@ public class AddActionController implements Initializable {
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
                     calendar.setVisible(false);
-                    fileToFindTrigger.setVisible(false);
 
                 }else if (newValue instanceof  DayOfMonthTrigger){
                     comboBox1.setVisible(true);
@@ -116,7 +113,6 @@ public class AddActionController implements Initializable {
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
                     calendar.setVisible(false);
-                    fileToFindTrigger.setVisible(false);
 
                 }else if( newValue instanceof SpecificDateTrigger ){
                     calendar.setVisible(true);
@@ -124,7 +120,6 @@ public class AddActionController implements Initializable {
                     messageTextArea.setVisible(false);
                     comboBox1.setVisible(false);
                     comboBoxMinute.setVisible(false);
-                    messageTextArea.setVisible(false);
                 }
 
             }
@@ -208,11 +203,6 @@ public class AddActionController implements Initializable {
             String selectedMinute = comboBoxMinute.getValue().toString();
             TimeOfDayTrigger timeOfDayTrigger = new TimeOfDayTrigger(selectedHour, selectedMinute);
             rule.setTrigger(timeOfDayTrigger);
-        }if ("Esistenza File".equals(selectedTrigger.toString())) {
-            String fileTocheck = fileToFindTrigger.getText();
-            String dirPath = selectedPath;
-            FileStateTrigger fileStateTrigger = new FileStateTrigger(dirPath,fileTocheck);
-            rule.setTrigger(fileStateTrigger);
         }
 
         if ("Giorno della settimana".equals(selectedTrigger.toString())){
@@ -313,7 +303,7 @@ public class AddActionController implements Initializable {
         System.out.println("Oggetto che ho creato: " + rule.toString());
         mainController.addRule(rule);
         ObservableList<Rule> ruleInstance = RuleService.getInstance();
-        SerializeList ser = new SerializeList(ruleInstance, "/Users/alessandromanfredi/IdeaProjects/SE_2023_Project_rev/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
+        SerializeList ser = new SerializeList(ruleInstance, "/Users/valentinacarmenschiro/Desktop/Project_SE/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
         ser.serialize();
         cancel();
     }
@@ -346,6 +336,20 @@ public class AddActionController implements Initializable {
         if (selectedFile != null) {
             filePath = selectedFile.getAbsolutePath();
         }
+    }
+
+    @FXML
+    public void addDirectoryTrigger(ActionEvent actionEvent) {
+        if ("Esistenza file".equals(triggerComboBox.getValue())) {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Seleziona una cartella");
+
+            File selectedDirectory = directoryChooser.showDialog(new Stage());
+            if (selectedDirectory != null) {
+                filePath = selectedDirectory.getAbsolutePath();
+            }
+        }
+
     }
 
 

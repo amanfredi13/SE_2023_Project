@@ -10,10 +10,11 @@
     <children>
         <TableView fx:id="actionTable" layoutX="9.0" layoutY="35.0" prefHeight="372.0" prefWidth="539.0">
             <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="111.5" text="Rule Name" />
-                <TableColumn fx:id="triggerColumn" prefWidth="159.0" text="Trigger" />
-                <TableColumn fx:id="actionColumn" prefWidth="160.0" text="Action" />
-                <TableColumn fx:id="statusColumn" prefWidth="107.5" text="State" />
+                <TableColumn fx:id="nameColumn" prefWidth="111.5" text="Rule Name" maxWidth="1115.0" minWidth="30.0"/>
+                <TableColumn fx:id="triggerColumn" prefWidth="159.0" text="Trigger" maxWidth="1590.0" minWidth="30.0"/>
+                <TableColumn fx:id="actionColumn" prefWidth="160.0" text="Action" maxWidth="1600.0" minWidth="30.0"/>
+                <TableColumn fx:id="statusColumn" onEditCommit="#handleStatusCellClick" prefWidth="107.5" text="State"
+                             maxWidth="1075.0" minWidth="30.0"/>
             </columns>
         </TableView>
         <Button layoutX="480.0" layoutY="449.0" onAction="#addRule" text="Add rule" />
