@@ -15,11 +15,15 @@ public class FileStateTrigger implements Trigger, Serializable {
     public String toString(){ return "Esistenza File";}
 
     @Override
-    public boolean isValidate() {
-        //Costruisco il path dato dalla somma della cartella in cui cercare il file + carattere separatore (cambia a seconda del sistema operativo) + nome del file
-        String percorsoCompleto = filepathDir + File.separator + filename;
-        //Se tale percorso esiste porta a un file mi viene restituito true
-        File file = new File(percorsoCompleto);
-        return file.exists();
+    public boolean isValidate() {//se entrambi i campi sono vuoti restituisco falso
+        if (filepathDir.isEmpty() && filename.isEmpty()) {
+            return false;
+        } else {
+            //Costruisco il path dato dalla somma della cartella in cui cercare il file + carattere separatore (cambia a seconda del sistema operativo) + nome del file
+            String percorsoCompleto = filepathDir + File.separator + filename;
+            //Se tale percorso esiste porta a un file mi viene restituito true
+            File file = new File(percorsoCompleto);
+            return file.exists();
+        }
     }
-}
+    }

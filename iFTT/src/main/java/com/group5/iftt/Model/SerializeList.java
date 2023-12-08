@@ -30,14 +30,11 @@ public class SerializeList implements Serializable{
                  return deserializedList;
 
         } catch (FileNotFoundException e) {
-            // Il file non esiste
-            e.printStackTrace();
+            System.out.printf("Errore: File non trovato");
         } catch (EOFException e) {
             System.out.printf("Il file da cui leggere i dati serializzati è vuoto");
-            e.printStackTrace();
         }catch (IOException | ClassNotFoundException e) {
-            // Gestione delle eccezioni durante la deserializzazione
-            e.printStackTrace();
+            System.out.printf("Errore: Problema con l'I/O");
         }
         // Se si verificano errori, restituisci una lista vuota
         System.out.printf("Restituisco una lista vuota");

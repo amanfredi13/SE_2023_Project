@@ -81,8 +81,9 @@ public class MainController {
             ObservableList<Rule> ruleInstance = RuleService.getInstance(); //Riserializzo l'Observabile list aggiornata passatomi come Singleton.
             SerializeList ser = new SerializeList(ruleInstance, BINARIES_FILEPATH);
             ser.serialize();
+        }else {
+            showAlert("Error", "Please, select an Action to delete.");
         }
-        showAlert("Error", "Please, select an Action to delete.");
     }
     private void handleClose() {
         //Aggiorno lo stato di tutte le regole prima di chiudere l'applicazione
