@@ -9,114 +9,120 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="333.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group5.iftt.Controller.AddActionController">
-    <HBox layoutY="64.0" prefHeight="50.0" prefWidth="613.0">
-        <children>
-            <Label text="Trigger">
-                <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </HBox.margin>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-            </Label>
-            <ComboBox fx:id="triggerComboBox" prefWidth="150.0" />
-         <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addDirectoryTrigger" text="Load file">
-            <HBox.margin>
-               <Insets left="10.0" />
-            </HBox.margin>
-         </Button>
-            <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="75.0">
-                <HBox.margin>
-                    <Insets left="20.0" />
-                </HBox.margin>
-            </ComboBox>
-            <ComboBox fx:id="comboBoxMinute" prefHeight="26.0" prefWidth="84.0" promptText="Min">
-                <HBox.margin>
-                    <Insets left="10.0" />
-                </HBox.margin>
-            </ComboBox>
-         <DatePicker fx:id="calendar"  />
-        </children>
-    </HBox>
-    <Button fx:id="addButton" layoutX="490.0" layoutY="293.0" onAction="#addAction" text="Add" />
-    <Button fx:id="cancelButton" layoutX="552.0" layoutY="293.0" onAction="#cancel" text="Undo" />
-    <HBox layoutY="14.0" prefHeight="50.0" prefWidth="613.0">
+<AnchorPane prefHeight="368.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group5.iftt.Controller.AddActionController">
+    <!-- Header -->
+    <HBox layoutY="66.0" prefHeight="35.0" prefWidth="613.0">
         <children>
             <Label text="Rule name:">
-                <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </HBox.margin>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-            </Label>
-            <TextField fx:id="nameTextField">
-                <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </HBox.margin>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-            </TextField>
-        </children>
-    </HBox>
-    <HBox layoutY="114.0" prefHeight="50.0" prefWidth="613.0">
-        <children>
-            <Label text="Action">
-                <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </HBox.margin>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-            </Label>
-            <ComboBox fx:id="actionComboBox" prefWidth="150.0" />
-            <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#addFileAction" prefHeight="26.0" prefWidth="86.0" text="Load Audio">
-                <HBox.margin>
-                    <Insets left="20.0" />
-                </HBox.margin>
-            </Button>
-         <TextField fx:id="textFieldWriteFile">
             <HBox.margin>
-               <Insets left="15.0" />
+               <Insets left="10.0" />
+            </HBox.margin>
+            <font>
+               <Font size="14.0" />
+            </font></Label>
+            <TextField fx:id="nameTextField" promptText="Insert Text...">
+            <HBox.margin>
+               <Insets left="10.0" />
             </HBox.margin></TextField>
-            <Label fx:id="fileNameLabel" prefHeight="17.0" prefWidth="101.0">
-            <HBox.margin>
-               <Insets top="5.0" />
-            </HBox.margin>
-            <padding>
-               <Insets left="15.0" />
-            </padding>
-            </Label>
         </children>
     </HBox>
-    <HBox layoutY="153.0" prefHeight="50.0" prefWidth="613.0">
+
+    <!-- Trigger Section -->
+    <HBox layoutY="102.0" prefHeight="43.0" prefWidth="613.0">
         <children>
-            <Label text="Stato:">
-                <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </HBox.margin>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-            </Label>
-            <ComboBox fx:id="statusComboBox" prefWidth="150.0" />
-         <Button fx:id="pathDestButton" mnemonicParsing="false" onAction="#openDirectoryChooser" text="Path Destinazione">
+            <Label prefHeight="17.0" prefWidth="64.0" text="Trigger:">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin>
-         </Button>
-         <Label fx:id="pathDestLabel">
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
+            <font>
+               <Font size="14.0" />
+            </font></Label>
+            <ComboBox fx:id="triggerComboBox" prefWidth="150.0">
             <HBox.margin>
                <Insets left="10.0" />
-            </HBox.margin>
-         </Label>
+            </HBox.margin></ComboBox>
+            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addDirectoryTrigger" prefHeight="26.0" prefWidth="82.0" text="Load file">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></Button>
+            <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="88.0">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></ComboBox>
+            <ComboBox fx:id="comboBoxMinute" prefHeight="26.0" prefWidth="88.0" promptText="Min">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></ComboBox>
+            <DatePicker fx:id="calendar" promptText="Insert a date...">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></DatePicker>
         </children>
     </HBox>
-   <TextArea fx:id="messageTextArea" layoutX="14.0" layoutY="203.0" prefHeight="59.0" prefWidth="200.0" promptText="Insert Text..." />
+
+    <!-- Action Section -->
+    <HBox layoutY="144.0" prefHeight="43.0" prefWidth="613.0">
+        <children>
+            <Label text="Action:">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+            <font>
+               <Font size="14.0" />
+            </font></Label>
+            <ComboBox fx:id="actionComboBox" prefWidth="150.0">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></ComboBox>
+            <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#addFileAction" prefHeight="26.0" prefWidth="86.0" text="Load Audio">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></Button>
+            <TextField fx:id="textFieldWriteFile" promptText="Insert Text...">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></TextField>
+            <Label fx:id="fileNameLabel" prefHeight="17.0" prefWidth="101.0" />
+        </children>
+    </HBox>
+
+    <!-- Status Section -->
+    <HBox layoutY="185.0" prefHeight="50.0" prefWidth="613.0">
+        <children>
+            <Label text="Status:">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+            <font>
+               <Font size="14.0" />
+            </font></Label>
+            <ComboBox fx:id="statusComboBox" prefWidth="150.0">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></ComboBox>
+            <Button fx:id="pathDestButton" mnemonicParsing="false" onAction="#openDirectoryChooser" text="Destination Path">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></Button>
+            <Label fx:id="pathDestLabel" prefHeight="17.0" prefWidth="170.0">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin></Label>
+        </children>
+    </HBox>
+
+    <!-- Message Text Area -->
+    <TextArea fx:id="messageTextArea" layoutX="14.0" layoutY="234.0" prefHeight="59.0" prefWidth="200.0" promptText="Insert Text..." />
+
+    <!-- Buttons -->
+    <Button fx:id="addButton" layoutX="534.0" layoutY="319.0" onAction="#addAction" text="Add" />
+    <Button fx:id="cancelButton" layoutX="590.0" layoutY="319.0" onAction="#cancel" text="Cancel" />
+   <Text fill="#4caf50" layoutX="231.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rule Customization">
+      <font>
+         <Font name="Arial" size="22.0" />
+      </font>
+   </Text>
 </AnchorPane>

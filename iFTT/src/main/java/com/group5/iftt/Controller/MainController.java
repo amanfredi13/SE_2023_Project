@@ -29,6 +29,7 @@ public class MainController {
     private TableColumn<Rule, Action> actionColumn;
     @FXML
     private TableColumn<Rule, String> statusColumn;
+    private static final String BINARIES_FILEPATH = "iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
     ObservableList<Rule> rules = RuleService.getInstance();
 
     public void initialize() {
@@ -43,11 +44,12 @@ public class MainController {
 
         //Deserializzazione e caricamento dati nella tabella
         ObservableList<Rule> ruleList = RuleService.getInstance();
-        ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize("/Users/valentinacarmenschiro/Desktop/Project_SE/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt")));
+        ruleList.setAll(FXCollections.observableArrayList(SerializeList.deserialize(BINARIES_FILEPATH)));
         actionTable.setItems(rules);
 
 
     }
+
     @FXML
     private void addRule() {
         try {
@@ -55,6 +57,9 @@ public class MainController {
             AnchorPane addActionView = loader.load();
             AddActionController addActionController = loader.getController();
             addActionController.setMainController(this);
+            // Carica il file CSS e aggiungilo alla scena della finestra di dialogo
+            String css = this.getClass().getResource("/com/group5/iftt/Style.css").toExternalForm();
+            addActionView.getStylesheets().add(css);
             Stage stage = new Stage();
             stage.setTitle("Aggiungi Regola");
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -72,11 +77,12 @@ public class MainController {
             // Rimuovi l'azione dalla tabella e dalla lista
             actionTable.getItems().remove(selectedRule);
             rules.remove(selectedRule);
+            //Sovrascrivo il file delle regole serializzate senza la regola appena eliminata.
+            ObservableList<Rule> ruleInstance = RuleService.getInstance(); //Riserializzo l'Observabile list aggiornata passatomi come Singleton.
+            SerializeList ser = new SerializeList(ruleInstance, BINARIES_FILEPATH);
+            ser.serialize();
         }
-        //Sovrascrivo il file delle regole serializzate senza la regola appena eliminata.
-        ObservableList<Rule> ruleInstance = RuleService.getInstance(); //Riserializzo l'Observabile list aggiornata passatomi come Singleton.
-        SerializeList ser = new SerializeList(ruleInstance, "/Users/valentinacarmenschiro/Desktop/Project_SE/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
-        ser.serialize();
+        showAlert("Error", "Please, select an Action to delete.");
     }
     private void handleClose() {
         //Aggiorno lo stato di tutte le regole prima di chiudere l'applicazione
@@ -87,6 +93,13 @@ public class MainController {
         rules.add(rule);
     }
 
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     // Metodo per configurare la cella della colonna dello stato
     private void configureStatusCellFactory() {
@@ -153,7 +166,7 @@ public class MainController {
     private void handleRuleStatusChange(Rule rule) {
         // Aggiorno la lista e salvo automaticamente nel file
         ObservableList<Rule> ruleInstance = RuleService.getInstance();
-        SerializeList ser = new SerializeList(ruleInstance, "/Users/valentinacarmenschiro/Desktop/Project_SE/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
+        SerializeList ser = new SerializeList(ruleInstance, BINARIES_FILEPATH);
         ser.serialize();
     }
 }

@@ -1,0 +1,56 @@
+/* Aggiungi stili globali */
+.root {
+    -fx-font-family: 'Arial';
+}
+
+/* Personalizza lo stile del pulsante */
+.button {
+    -fx-background-color: #4CAF50; /* Colore di sfondo */
+    -fx-text-fill: white; /* Colore del testo */
+}
+
+/* Personalizza lo stile dell'etichetta */
+.label {
+    -fx-text-fill: #333333; /* Colore del testo */
+}
+
+.text-field {
+    -fx-background-color: #f0f0f0; /* Colore di sfondo */
+    -fx-background-insets: 0;
+    -fx-opacity: 0.9; /* Opacità al 90% */
+    -fx-border-color: #bdbdbd; /* Colore del bordo grigio chiaro */
+    -fx-border-width: 1px; /* Spessore del bordo */
+    -fx-border-radius: 3px; /* Angoli arrotondati */
+}
+
+/* Personalizza lo stile della casella combinata (ComboBox) */
+.combo-box {
+    -fx-background-color: #f0f0f0; /* Colore di sfondo */
+    -fx-background-insets: 0;
+    -fx-opacity: 0.9; /* Opacità al 90% */
+    -fx-border-color: #bdbdbd; /* Colore del bordo grigio chiaro */
+    -fx-border-width: 1px; /* Spessore del bordo */
+    -fx-border-radius: 3px; /* Angoli arrotondati */
+}
+
+/* Personalizza lo stile della tabella (TableView) */
+.table-view {
+    -fx-font-size: 14px;
+}
+
+/* Personalizza lo stile delle celle della tabella */
+.table-cell {
+    -fx-alignment: CENTER; /* Allinea il testo al centro nelle celle */
+}
+
+/* Personalizza lo stile delle righe selezionate nella tabella */
+.table-row-cell:selected {
+    -fx-background-color: #4CAF50; /* Colore di sfondo quando la riga è selezionata */
+    -fx-text-fill: white; /* Colore del testo quando la riga è selezionata */
+}
+
+/* Personalizza lo stile del layout */
+.grid-pane {
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+}

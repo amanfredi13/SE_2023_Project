@@ -26,11 +26,11 @@ public class AddActionController implements Initializable {
     @FXML
     private ComboBox<Action> actionComboBox;
     @FXML
-    private ComboBox statusComboBox;
+    private ComboBox<String> statusComboBox;
     @FXML
-    private ComboBox comboBox1;
+    private ComboBox<String> comboBox1;
     @FXML
-    private ComboBox comboBoxMinute;
+    private ComboBox<String> comboBoxMinute;
     @FXML
     private Button loadFileButton;
     @FXML
@@ -50,7 +50,7 @@ public class AddActionController implements Initializable {
     @FXML
     private DatePicker calendar;
 
-
+    private static final String BINARIES_FILEPATH = "iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
     private String selectedPath;
     private File SelectedFile;
     @FXML
@@ -62,6 +62,7 @@ public class AddActionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
 
         //inizializzazione comboBox che permettono di customizzare la regola in base alle diverse operazioni possibili
         triggerComboBox.setItems(FXCollections.observableArrayList(new TimeOfDayTrigger(), new FileStateTrigger(), new DayOfWeekTrigger(), new DayOfMonthTrigger(), new SpecificDateTrigger()));
@@ -82,14 +83,13 @@ public class AddActionController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Trigger> observable, Trigger oldValue, Trigger newValue){
                 if (newValue instanceof TimeOfDayTrigger) {
+                    comboBox1.setPromptText("Hour");
                     comboBox1.setVisible(true);
                     comboBox1.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
                     comboBoxMinute.setVisible(true);
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
                     calendar.setVisible(false);
-
-                    //comboBox1.getEditor().setPromptText("Hour");
                 }if (newValue instanceof FileStateTrigger) {
                     checkFileButton.setVisible(true);
                     checkFileButton.setText("Load Directory");
@@ -100,16 +100,16 @@ public class AddActionController implements Initializable {
 
                 } else if (newValue instanceof DayOfWeekTrigger) {
                     comboBox1.setVisible(true);
-                    comboBox1.setItems(FXCollections.observableArrayList("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"));
-                    //comboBox1.getEditor().setPromptText("Day");
+                    comboBox1.setPromptText("Days");
+                    comboBox1.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
                     calendar.setVisible(false);
 
                 }else if (newValue instanceof  DayOfMonthTrigger){
+                    comboBox1.setPromptText("Days");
                     comboBox1.setVisible(true);
                     comboBox1.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"));
-                    //comboBox1.getEditor().setPromptText("Day");
                     checkFileButton.setVisible(false);
                     messageTextArea.setVisible(false);
                     calendar.setVisible(false);
@@ -175,19 +175,24 @@ public class AddActionController implements Initializable {
     private void addAction() {
         Rule rule = new Rule(); //inizializzo rule vuota che verrà composta estraendo i dati ai vari campi
 
+        String ruleName = nameTextField.getText();
+        if (ruleName.isEmpty()) {
+            showAlert("Error", "Please, select e name for the Rule.");
+            return;
+        }
         Action selectedAction = actionComboBox.getValue();
         if (selectedAction == null) {
-            showAlert("Errore", "Seleziona un'azione");
+            showAlert("Error", "Please, select an Action for the Rule.");
             return;
         }
         Trigger selectedTrigger =  triggerComboBox.getValue();
         if (selectedTrigger == null) {
-            showAlert("Errore", "Seleziona un trigger");
+            showAlert("Error", "Please, select a Trigger for the Action");
             return;
         }
         String status =  statusComboBox.getValue().toString();
         if (status == null) {
-            showAlert("Errore", "Seleziona un trigger");
+            showAlert("Error", "Please, select a Status for the Action");
             return;
         }else{
             rule.setStatus(status);
@@ -303,7 +308,7 @@ public class AddActionController implements Initializable {
         System.out.println("Oggetto che ho creato: " + rule.toString());
         mainController.addRule(rule);
         ObservableList<Rule> ruleInstance = RuleService.getInstance();
-        SerializeList ser = new SerializeList(ruleInstance, "/Users/valentinacarmenschiro/Desktop/Project_SE/SE_2023_Project/iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt");
+        SerializeList ser = new SerializeList(ruleInstance, BINARIES_FILEPATH);
         ser.serialize();
         cancel();
     }
