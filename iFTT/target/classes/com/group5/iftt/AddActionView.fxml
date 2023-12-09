@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="368.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group5.iftt.Controller.AddActionController">
     <!-- Header -->
-    <HBox layoutY="66.0" prefHeight="35.0" prefWidth="613.0">
+    <HBox layoutY="66.0" prefHeight="35.0" prefWidth="652.0">
         <children>
             <Label text="Rule name:">
             <HBox.margin>
@@ -31,7 +31,7 @@
     </HBox>
 
     <!-- Trigger Section -->
-    <HBox layoutY="102.0" prefHeight="43.0" prefWidth="613.0">
+    <HBox layoutY="102.0" prefHeight="43.0" prefWidth="652.0">
         <children>
             <Label prefHeight="17.0" prefWidth="64.0" text="Trigger:">
             <HBox.margin>
@@ -44,15 +44,15 @@
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addDirectoryTrigger" prefHeight="26.0" prefWidth="82.0" text="Load file">
+            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addDirectoryTrigger" prefHeight="26.0" prefWidth="77.0" text="Load file">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></Button>
-            <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="88.0">
+            <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="98.0">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <ComboBox fx:id="comboBoxMinute" prefHeight="26.0" prefWidth="88.0" promptText="Min">
+            <ComboBox fx:id="comboBoxMinute" prefHeight="26.0" prefWidth="98.0" promptText="Min">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
@@ -64,7 +64,7 @@
     </HBox>
 
     <!-- Action Section -->
-    <HBox layoutY="144.0" prefHeight="43.0" prefWidth="613.0">
+    <HBox layoutY="144.0" prefHeight="43.0" prefWidth="652.0">
         <children>
             <Label text="Action:">
             <HBox.margin>
@@ -90,7 +90,7 @@
     </HBox>
 
     <!-- Status Section -->
-    <HBox layoutY="185.0" prefHeight="50.0" prefWidth="613.0">
+    <HBox layoutY="185.0" prefHeight="50.0" prefWidth="652.0">
         <children>
             <Label text="Status:">
             <HBox.margin>
@@ -103,11 +103,11 @@
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <Button fx:id="pathDestButton" mnemonicParsing="false" onAction="#openDirectoryChooser" text="Destination Path">
+            <Button fx:id="pathDestButton" mnemonicParsing="false" onAction="#openDirectoryChooser" prefHeight="26.0" prefWidth="125.0" text="Destination Path">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></Button>
-            <Label fx:id="pathDestLabel" prefHeight="17.0" prefWidth="170.0">
+            <Label fx:id="pathDestLabel" prefHeight="17.0" prefWidth="316.0">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></Label>

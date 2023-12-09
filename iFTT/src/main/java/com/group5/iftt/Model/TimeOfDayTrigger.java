@@ -1,5 +1,11 @@
 package com.group5.iftt.Model;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -41,9 +47,6 @@ public class TimeOfDayTrigger implements Trigger, Serializable {
     public String getTimeofDay(){
         return triggerTime.toString();
     }
-
-
-
 
 }
 

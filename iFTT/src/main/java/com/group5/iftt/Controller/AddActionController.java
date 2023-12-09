@@ -1,4 +1,9 @@
 package com.group5.iftt.Controller;
+import com.group5.iftt.Controller.ActionClassStates.*;
+import com.group5.iftt.Controller.TriggerClassStates.DayOfWeekState;
+import com.group5.iftt.Controller.TriggerClassStates.FileStateState;
+import com.group5.iftt.Controller.TriggerClassStates.SpecificDateState;
+import com.group5.iftt.Controller.TriggerClassStates.TimeOfDayState;
 import com.group5.iftt.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -79,92 +84,52 @@ public class AddActionController implements Initializable {
         calendar.setVisible(false);
 
         //Le diverse comboBox effettueranno il displacement dei rispettibi bottoni o comboBox per permettere la customizzazione dell'azione
+        TriggerContext triggerContext = new TriggerContext(); //Creo istanza contesto Trigger applicando pattern State
         triggerComboBox.valueProperty().addListener(new ChangeListener<Trigger>() {
             @Override
             public void changed(ObservableValue<? extends Trigger> observable, Trigger oldValue, Trigger newValue){
                 if (newValue instanceof TimeOfDayTrigger) {
-                    comboBox1.setPromptText("Hour");
-                    comboBox1.setVisible(true);
-                    comboBox1.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
-                    comboBoxMinute.setVisible(true);
-                    checkFileButton.setVisible(false);
-                    messageTextArea.setVisible(false);
-                    calendar.setVisible(false);
+                   triggerContext.setState(new TimeOfDayState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
                 }if (newValue instanceof FileStateTrigger) {
-                    checkFileButton.setVisible(true);
-                    checkFileButton.setText("Load Directory");
-                    messageTextArea.setVisible(true);
-                    comboBox1.setVisible(false);
-                    comboBoxMinute.setVisible(false);
-                    calendar.setVisible(false);
-
+                   triggerContext.setState(new FileStateState());
+                   triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
                 } else if (newValue instanceof DayOfWeekTrigger) {
-                    comboBox1.setVisible(true);
-                    comboBox1.setPromptText("Days");
-                    comboBox1.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
-                    checkFileButton.setVisible(false);
-                    messageTextArea.setVisible(false);
-                    calendar.setVisible(false);
-
+                   triggerContext.setState(new DayOfWeekState());
+                   triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
                 }else if (newValue instanceof  DayOfMonthTrigger){
-                    comboBox1.setPromptText("Days");
-                    comboBox1.setVisible(true);
-                    comboBox1.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"));
-                    checkFileButton.setVisible(false);
-                    messageTextArea.setVisible(false);
-                    calendar.setVisible(false);
-
+                    triggerContext.setState(new TimeOfDayState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
                 }else if( newValue instanceof SpecificDateTrigger ){
-                    calendar.setVisible(true);
-                    checkFileButton.setVisible(false);
-                    messageTextArea.setVisible(false);
-                    comboBox1.setVisible(false);
-                    comboBoxMinute.setVisible(false);
+                    triggerContext.setState(new SpecificDateState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
                 }
 
             }
         });
 
+        ActionContext actionContext = new ActionContext(); //Creo istanza contesto Action applicando pattern State
         actionComboBox.valueProperty().addListener(new ChangeListener<Action>() {
             @Override
             public void changed(ObservableValue<? extends Action> observable, Action oldValue, Action newValue) {
                 if (newValue instanceof PlayAudioFileAction) {
-                    // Se sì, rendi visibile il bottone
-                    loadFileButton.setText("Load Audio");
-                    loadFileButton.setVisible(true);
-                    messageTextArea.setVisible(false);
-                    textFieldWriteFile.setVisible(false);
+                    actionContext.setState(new PlayAudioFileState());
+                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof ShowDialogBoxAction) {
-                    loadFileButton.setVisible(false);
-                    messageTextArea.setVisible(true);
-                    textFieldWriteFile.setVisible(false);
+                    actionContext.setState(new ShowDialogBoxState());
+                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof WriteEofAction) {
-                    loadFileButton.setText("Load File");
-                    loadFileButton.setVisible(true);
-                    textFieldWriteFile.setVisible(true);
-                    messageTextArea.setVisible(false);
+                    actionContext.setState(new WriteEOFState());
+                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof ExecuteProgramAction) {
-                    loadFileButton.setText("Choose Script");
-                    loadFileButton.setVisible(true);
-                    textFieldWriteFile.setVisible(true);
-                    messageTextArea.setVisible(false);
+                    actionContext.setState(new ExecuteProgramState());
+                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof FileCopyAction || newValue instanceof FileMoveAction) {
-                    loadFileButton.setText("Load File");
-                    loadFileButton.setVisible(true);
-                    messageTextArea.setVisible(false);
-                    textFieldWriteFile.setVisible(false);
-                    pathDestButton.setVisible(true);
+                    actionContext.setState(new FileCopyFileMoveState());
+                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
                 }else if( newValue instanceof  FileDeleteAction){
-                    loadFileButton.setText("Load File");
-                    loadFileButton.setVisible(true);
-                    messageTextArea.setVisible(false);
-                    textFieldWriteFile.setVisible(false);
-                    pathDestButton.setVisible(false);
-                } else{
-                    // Altrimenti, rendi invisibile il bottone
-                    loadFileButton.setVisible(false);
-                    textFieldWriteFile.setVisible(false);
-                    pathDestButton.setVisible(false);
+                    actionContext.setState(new FileDeleteState());
+                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
                 }
             }
         });
