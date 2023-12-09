@@ -1,9 +1,8 @@
 package com.group5.iftt;
 
 
-import com.group5.iftt.Controller.AddActionController;
-import com.group5.iftt.Controller.MainController;
-import com.group5.iftt.Model.CheckRule;
+
+import com.group5.iftt.Model.RuleAndSerialize.CheckRule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

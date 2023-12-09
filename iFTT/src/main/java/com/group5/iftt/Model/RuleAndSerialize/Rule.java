@@ -4,6 +4,7 @@ import com.group5.iftt.Model.Triggers.Trigger;
 import javafx.beans.property.*;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Rule implements Serializable {
@@ -13,6 +14,13 @@ public class Rule implements Serializable {
     private transient StringProperty status;
     private boolean actionStarted = false;
 
+    public static Rule createRule(boolean isSleeping) {
+        if (isSleeping) {
+            return new RuleSleeping();
+        } else {
+            return new Rule();
+        }
+    }
 
     public Rule(String name,Action action, Trigger trigger, String status){
         this.name = new SimpleStringProperty(name);
@@ -40,7 +48,6 @@ public class Rule implements Serializable {
 
 
 
-
         //scrivo attributi oggetto
         out.writeObject(name);
         out.writeObject(action);
@@ -58,6 +65,7 @@ public class Rule implements Serializable {
         Trigger trigger = (Trigger) in.readObject();
         String status = (String) in.readObject();
         Boolean actionstarted = (Boolean) in.readObject();
+
 
         //setto gli attributi letti nei rispettivi campi dell'oggetto
         this.name = new SimpleStringProperty(name);

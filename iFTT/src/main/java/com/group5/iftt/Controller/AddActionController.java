@@ -2,6 +2,7 @@ package com.group5.iftt.Controller;
 import com.group5.iftt.Model.Actions.*;
 import com.group5.iftt.Model.RuleAndSerialize.Rule;
 import com.group5.iftt.Model.RuleAndSerialize.RuleService;
+import com.group5.iftt.Model.RuleAndSerialize.RuleSleeping;
 import com.group5.iftt.Model.RuleAndSerialize.SerializeList;
 import com.group5.iftt.Model.TriggerClassStates.*;
 import com.group5.iftt.Model.ActionClassStates.*;
@@ -14,12 +15,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -64,6 +68,16 @@ public class AddActionController implements Initializable {
     private File SelectedFile;
     @FXML
     private Label pathDestLabel;
+    @FXML
+    private CheckBox repeatCheckBox;
+    @FXML
+    private VBox repeatVBox;
+    @FXML
+    private Spinner<Integer> repeatDaySpinner;
+    @FXML
+    private Spinner<Integer> repeatHoursSpinner;
+    @FXML
+    private Spinner<Integer> repeatMinutesSpinner;
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -78,6 +92,16 @@ public class AddActionController implements Initializable {
         actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction(), new WriteEofAction(), new ExecuteProgramAction(), new FileCopyAction(), new FileMoveAction(), new FileDeleteAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
         comboBoxMinute.setItems(FXCollections.observableArrayList((IntStream.rangeClosed(1, 59).mapToObj(i -> String.format("%02d", i)).collect(Collectors.toList()))));
+
+        // Inizializzazione degli Spinner
+        SpinnerValueFactory<Integer> daysFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 365);
+        SpinnerValueFactory<Integer> hoursFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
+        SpinnerValueFactory<Integer> minutesFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        // Applico i factory agli Spinner
+        repeatDaySpinner.setValueFactory(daysFactory);
+        repeatHoursSpinner.setValueFactory(hoursFactory);
+        repeatMinutesSpinner.setValueFactory(minutesFactory);
+
         comboBox1.setVisible(false);
         comboBoxMinute.setVisible(false);
         checkFileButton.setVisible(false);
@@ -86,6 +110,10 @@ public class AddActionController implements Initializable {
         messageTextArea.setVisible(false);
         pathDestButton.setVisible(false);
         calendar.setVisible(false);
+
+        repeatVBox.setVisible(false);
+        // Binding tra la visibilità dalla VBox e il valore della Checkbox
+        repeatVBox.visibleProperty().bind(repeatCheckBox.selectedProperty());
 
         //Le diverse comboBox effettueranno il displacement dei rispettibi bottoni o comboBox per permettere la customizzazione dell'azione
         TriggerContext triggerContext = new TriggerContext(); //Creo istanza contesto Trigger applicando pattern State
@@ -142,7 +170,25 @@ public class AddActionController implements Initializable {
 
     @FXML
     private void addAction() {
-        Rule rule = new Rule(); //inizializzo rule vuota che verrà composta estraendo i dati ai vari campi
+       // Rule rule = new Rule(); //inizializzo rule vuota che verrà composta estraendo i dati ai vari campi
+
+        Rule rule;
+
+
+        if (repeatCheckBox.isSelected()) {
+           rule = Rule.createRule(true);  // Regola di tipo RuleSleeping
+
+                // Ottengo giorni, ore e minuti dagli Spinner
+                int days = repeatDaySpinner.getValue();
+                int hours =  repeatHoursSpinner.getValue();
+                int minutes = repeatMinutesSpinner.getValue();
+
+            ((RuleSleeping) rule).setRepeatValues(days, hours, minutes);
+            ((RuleSleeping) rule).whenWakeUp();
+
+        } else {
+            rule = Rule.createRule(false);  // Regola di tipo Rule
+        }
 
         String ruleName = nameTextField.getText();
         if (ruleName.isEmpty()) {
