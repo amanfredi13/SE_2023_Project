@@ -18,7 +18,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 559, 489));
         root.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         primaryStage.show();
-        CheckRule checkRule = CheckRule.getInstance(); //inizio a controllare le regole
+        CheckRule checkRule = CheckRule.getInstance(); //inizio a controllare le regole.
         }
 
         @Override
