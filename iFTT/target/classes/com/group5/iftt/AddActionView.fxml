@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="514.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group5.iftt.Controller.AddActionController">
+<AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group5.iftt.Controller.AddActionController">
     <!-- Header -->
     <HBox layoutY="66.0" prefHeight="35.0" prefWidth="652.0">
         <children>
@@ -34,7 +34,7 @@
     </HBox>
 
     <!-- Trigger Section -->
-    <HBox layoutY="102.0" prefHeight="43.0" prefWidth="652.0">
+    <HBox layoutY="102.0" prefHeight="43.0" prefWidth="773.0">
         <children>
             <Label prefHeight="17.0" prefWidth="64.0" text="Trigger:">
             <HBox.margin>
@@ -47,10 +47,15 @@
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addDirectoryTrigger" prefHeight="26.0" prefWidth="77.0" text="Load file">
+            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addFileTrigger" prefHeight="26.0" prefWidth="77.0" text="Load file">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></Button>
+         <TextField fx:id="triggerTextField" promptText="Insert ...">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </TextField>
             <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="98.0">
             <HBox.margin>
                <Insets left="10.0" />
@@ -59,7 +64,7 @@
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <DatePicker fx:id="calendar" promptText="Insert a date...">
+            <DatePicker fx:id="calendar" prefHeight="25.0" prefWidth="145.0" promptText="Insert a date...">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></DatePicker>

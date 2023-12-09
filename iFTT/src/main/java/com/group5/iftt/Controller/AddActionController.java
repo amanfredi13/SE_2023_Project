@@ -61,7 +61,8 @@ public class AddActionController implements Initializable {
     private DatePicker calendar;
 
     private static final String BINARIES_FILEPATH = "iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
-    private String selectedPath;
+    private String selectedPathTrigger;
+    private String selectedPathAction;
     private File SelectedFile;
     @FXML
     private Label pathDestLabel;
@@ -75,6 +76,8 @@ public class AddActionController implements Initializable {
     private Spinner<Integer> repeatHoursSpinner;
     @FXML
     private Spinner<Integer> repeatMinutesSpinner;
+    @FXML
+    private TextField triggerTextField;
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -85,7 +88,7 @@ public class AddActionController implements Initializable {
 
 
         //inizializzazione comboBox che permettono di customizzare la regola in base alle diverse operazioni possibili
-        triggerComboBox.setItems(FXCollections.observableArrayList(new TimeOfDayTrigger(), new FileStateTrigger(), new DayOfWeekTrigger(), new DayOfMonthTrigger(), new SpecificDateTrigger()));
+        triggerComboBox.setItems(FXCollections.observableArrayList(new TimeOfDayTrigger(), new FileStateTrigger(), new DayOfWeekTrigger(), new DayOfMonthTrigger(), new SpecificDateTrigger(), new FileSizeTrigger()));
         actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction(), new WriteEofAction(), new ExecuteProgramAction(), new FileCopyAction(), new FileMoveAction(), new FileDeleteAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
         comboBoxMinute.setItems(FXCollections.observableArrayList((IntStream.rangeClosed(1, 59).mapToObj(i -> String.format("%02d", i)).collect(Collectors.toList()))));
@@ -116,22 +119,26 @@ public class AddActionController implements Initializable {
         TriggerContext triggerContext = new TriggerContext(); //Creo istanza contesto Trigger applicando pattern State
         triggerComboBox.valueProperty().addListener(new ChangeListener<Trigger>() {
             @Override
-            public void changed(ObservableValue<? extends Trigger> observable, Trigger oldValue, Trigger newValue){
+            public void changed(ObservableValue<? extends Trigger> observable, Trigger oldValue, Trigger newValue) {
                 if (newValue instanceof TimeOfDayTrigger) {
-                   triggerContext.setState(new TimeOfDayState());
-                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
-                }if (newValue instanceof FileStateTrigger) {
-                   triggerContext.setState(new FileStateState());
-                   triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
-                } else if (newValue instanceof DayOfWeekTrigger) {
-                   triggerContext.setState(new DayOfWeekState());
-                   triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
-                }else if (newValue instanceof  DayOfMonthTrigger){
                     triggerContext.setState(new TimeOfDayState());
-                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
-                }else if( newValue instanceof SpecificDateTrigger ){
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
+                }
+                if (newValue instanceof FileStateTrigger) {
+                    triggerContext.setState(new FileStateState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
+                } else if (newValue instanceof DayOfWeekTrigger) {
+                    triggerContext.setState(new DayOfWeekState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
+                } else if (newValue instanceof DayOfMonthTrigger) {
+                    triggerContext.setState(new TimeOfDayState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
+                } else if (newValue instanceof SpecificDateTrigger) {
                     triggerContext.setState(new SpecificDateState());
-                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar);
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
+                } else if (newValue instanceof FileSizeTrigger) {
+                    triggerContext.setState(new FileSizeState());
+                    triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
                 }
 
             }
@@ -143,22 +150,22 @@ public class AddActionController implements Initializable {
             public void changed(ObservableValue<? extends Action> observable, Action oldValue, Action newValue) {
                 if (newValue instanceof PlayAudioFileAction) {
                     actionContext.setState(new PlayAudioFileState());
-                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
+                    actionContext.configureUI(loadFileButton, messageTextArea, textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof ShowDialogBoxAction) {
                     actionContext.setState(new ShowDialogBoxState());
-                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
+                    actionContext.configureUI(loadFileButton, messageTextArea, textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof WriteEofAction) {
                     actionContext.setState(new WriteEOFState());
-                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
+                    actionContext.configureUI(loadFileButton, messageTextArea, textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof ExecuteProgramAction) {
                     actionContext.setState(new ExecuteProgramState());
-                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
+                    actionContext.configureUI(loadFileButton, messageTextArea, textFieldWriteFile, pathDestButton);
                 } else if (newValue instanceof FileCopyAction || newValue instanceof FileMoveAction) {
                     actionContext.setState(new FileCopyFileMoveState());
-                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
-                }else if( newValue instanceof  FileDeleteAction){
+                    actionContext.configureUI(loadFileButton, messageTextArea, textFieldWriteFile, pathDestButton);
+                } else if (newValue instanceof FileDeleteAction) {
                     actionContext.setState(new FileDeleteState());
-                    actionContext.configureUI(loadFileButton, messageTextArea,  textFieldWriteFile, pathDestButton);
+                    actionContext.configureUI(loadFileButton, messageTextArea, textFieldWriteFile, pathDestButton);
                 }
             }
         });
@@ -191,16 +198,16 @@ public class AddActionController implements Initializable {
             showAlert("Error", "Please, select an Action for the Rule.");
             return;
         }
-        Trigger selectedTrigger =  triggerComboBox.getValue();
+        Trigger selectedTrigger = triggerComboBox.getValue();
         if (selectedTrigger == null) {
             showAlert("Error", "Please, select a Trigger for the Action");
             return;
         }
-        String status =  statusComboBox.getValue().toString();
+        String status = statusComboBox.getValue().toString();
         if (status == null) {
             showAlert("Error", "Please, select a Status for the Action");
             return;
-        }else{
+        } else {
             rule.setStatus(status);
         }
 
@@ -216,26 +223,38 @@ public class AddActionController implements Initializable {
             rule.setTrigger(timeOfDayTrigger);
         }
 
-        if ("Giorno della settimana".equals(selectedTrigger.toString())){
-            String selectedDayWeek= comboBox1.getValue().toString();
-            DayOfWeekTrigger dayOfWeekTrigger= new DayOfWeekTrigger(selectedDayWeek);
+        if ("Giorno della settimana".equals(selectedTrigger.toString())) {
+            String selectedDayWeek = comboBox1.getValue().toString();
+            DayOfWeekTrigger dayOfWeekTrigger = new DayOfWeekTrigger(selectedDayWeek);
             rule.setTrigger(dayOfWeekTrigger);
         }
 
-        if("Giorno del mese".equals(selectedTrigger.toString())){
-            String selectedDayMonth= comboBox1.getValue().toString();
-            DayOfMonthTrigger dayOfMonthTrigger= new DayOfMonthTrigger(selectedDayMonth);
+        if ("Giorno del mese".equals(selectedTrigger.toString())) {
+            String selectedDayMonth = comboBox1.getValue().toString();
+            DayOfMonthTrigger dayOfMonthTrigger = new DayOfMonthTrigger(selectedDayMonth);
             rule.setTrigger(dayOfMonthTrigger);
         }
-        if("Giorno specifico".equals(selectedTrigger.toString())){
-            LocalDate localDate= calendar.getValue();
-            SpecificDateTrigger specificDateTrigger= new SpecificDateTrigger(localDate);
+        if ("Giorno specifico".equals(selectedTrigger.toString())) {
+            LocalDate localDate = calendar.getValue();
+            SpecificDateTrigger specificDateTrigger = new SpecificDateTrigger(localDate);
             rule.setTrigger(specificDateTrigger);
         }
+        if ("Esistenza file".equals(triggerComboBox.getValue())) {
+            String filename = triggerTextField.getText();
+            FileStateTrigger fileStateTrigger = new FileStateTrigger(selectedPathTrigger, filename);
+            rule.setTrigger(fileStateTrigger);
+        }
+        if ("Dimensione File".equals(selectedTrigger.toString())) {
+            String bytedim = triggerTextField.getText();
+            String filePath = selectedFile.getAbsolutePath();
+            FileSizeTrigger fileSizeTrigger = new FileSizeTrigger(filePath, bytedim);
+            rule.setTrigger(fileSizeTrigger);
+        }
+
         //COSTRUZIONE ACTION
         if ("Avviso popup".equals(selectedAction.toString())) {
             String userMessage = messageTextArea.getText();
-            if (userMessage != null && !userMessage.isEmpty()) {
+            if (!userMessage.isEmpty()) {
                 ShowDialogBoxAction showDialogBoxAction = new ShowDialogBoxAction();
                 showDialogBoxAction.setMessage(userMessage);
                 rule.setAction(showDialogBoxAction);
@@ -243,8 +262,6 @@ public class AddActionController implements Initializable {
                 showAlert("Messaggio d'avviso", "Inserisci un messaggio per l'avviso popup.");
                 return;
             }
-        } else {
-            messageTextArea.setVisible(false);
         }
         if ("Riproduzione Audio".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
@@ -278,9 +295,9 @@ public class AddActionController implements Initializable {
                 return;
             }
         }
-        if("Copia File".equals(selectedAction.toString())){
+        if ("Copia File".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
-            String filePathDestination = selectedPath;
+            String filePathDestination = selectedPathAction;
             if (filePathDestination != null && !filePathDestination.isEmpty()) {
                 FileCopyAction fileCopyAction = new FileCopyAction(filePath, filePathDestination);
                 fileCopyAction.setCopyFile(filePath, filePathDestination);
@@ -290,9 +307,9 @@ public class AddActionController implements Initializable {
                 return;
             }
         }
-        if("Sposta File".equals(selectedAction.toString())){
+        if ("Sposta File".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
-            String filePathDestination = selectedPath;
+            String filePathDestination = selectedPathAction;
             if (filePathDestination != null && !filePathDestination.isEmpty()) {
                 FileMoveAction fileMoveAction = new FileMoveAction(filePath, filePathDestination);
                 fileMoveAction.setMoveFile(filePath, filePathDestination);
@@ -302,13 +319,12 @@ public class AddActionController implements Initializable {
                 return;
             }
         }
-        if("Elimina File".equals(selectedAction.toString())) {
+        if ("Elimina File".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
             FileDeleteAction fileDeleteAction = new FileDeleteAction(filePath);
             fileDeleteAction.setFilePath(filePath);
             rule.setAction(fileDeleteAction);
         }
-
 
 
         System.out.println("Oggetto che ho creato: " + rule.toString());
@@ -349,7 +365,7 @@ public class AddActionController implements Initializable {
         }
     }
 
-    @FXML
+    @Deprecated
     public void addDirectoryTrigger(ActionEvent actionEvent) {
         if ("Esistenza file".equals(triggerComboBox.getValue())) {
             DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -394,9 +410,37 @@ public class AddActionController implements Initializable {
 
         // Aggiorna la label
         if (selectedDirectory != null) {
-            selectedPath = selectedDirectory.getAbsolutePath();
-            pathDestLabel.setText(selectedPath);
+            selectedPathAction = selectedDirectory.getAbsolutePath();
+            pathDestLabel.setText(selectedPathAction);
+
         }
     }
+
+    @FXML
+    public void addFileTrigger(ActionEvent actionEvent) {
+        if ("Esistenza File".equals(triggerComboBox.getValue().toString())) {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Seleziona una cartella di destinazione");
+            // Mostra la finestra di dialogo della cartella di destinazione
+            File selectedDirectory = directoryChooser.showDialog(new Stage());
+
+            // Aggiorna la label
+            if (selectedDirectory != null) {
+                selectedPathTrigger = selectedDirectory.getAbsolutePath();
+            }
+        }
+        if ("Dimensione File".equals(triggerComboBox.getValue().toString())) {
+            FileChooser fileChooser = new FileChooser();
+            // Mostra la finestra di dialogo per la selezione del file
+            selectedFile = fileChooser.showOpenDialog(new Stage());
+
+            // Chiamare un metodo per aggiornare la Label con il nome del file selezionato
+            updateFileNameLabel();
+            if (selectedFile != null) {
+                selectedPathTrigger = selectedFile.getAbsolutePath();
+            }
+        }
+    }
+
 }
 
