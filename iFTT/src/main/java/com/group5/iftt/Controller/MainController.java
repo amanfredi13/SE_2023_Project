@@ -1,8 +1,9 @@
 package com.group5.iftt.Controller;
-import com.group5.iftt.Model.*;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+import com.group5.iftt.Model.Actions.Action;
+import com.group5.iftt.Model.RuleAndSerialize.Rule;
+import com.group5.iftt.Model.RuleAndSerialize.RuleService;
+import com.group5.iftt.Model.RuleAndSerialize.SerializeList;
+import com.group5.iftt.Model.Triggers.Trigger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +16,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 public class MainController {
 

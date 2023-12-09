@@ -1,10 +1,11 @@
 package com.group5.iftt.Controller;
-import com.group5.iftt.Controller.ActionClassStates.*;
-import com.group5.iftt.Controller.TriggerClassStates.DayOfWeekState;
-import com.group5.iftt.Controller.TriggerClassStates.FileStateState;
-import com.group5.iftt.Controller.TriggerClassStates.SpecificDateState;
-import com.group5.iftt.Controller.TriggerClassStates.TimeOfDayState;
-import com.group5.iftt.Model.*;
+import com.group5.iftt.Model.Actions.*;
+import com.group5.iftt.Model.RuleAndSerialize.Rule;
+import com.group5.iftt.Model.RuleAndSerialize.RuleService;
+import com.group5.iftt.Model.RuleAndSerialize.SerializeList;
+import com.group5.iftt.Model.TriggerClassStates.*;
+import com.group5.iftt.Model.ActionClassStates.*;
+import com.group5.iftt.Model.Triggers.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,6 +21,9 @@ import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class AddActionController implements Initializable {
     @FXML
     private TextField nameTextField;
@@ -73,7 +77,7 @@ public class AddActionController implements Initializable {
         triggerComboBox.setItems(FXCollections.observableArrayList(new TimeOfDayTrigger(), new FileStateTrigger(), new DayOfWeekTrigger(), new DayOfMonthTrigger(), new SpecificDateTrigger()));
         actionComboBox.setItems(FXCollections.observableArrayList(new PlayAudioFileAction(), new ShowDialogBoxAction(), new WriteEofAction(), new ExecuteProgramAction(), new FileCopyAction(), new FileMoveAction(), new FileDeleteAction()));
         statusComboBox.setItems(FXCollections.observableArrayList("Enabled", "Disabled"));
-        comboBoxMinute.setItems(FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"));
+        comboBoxMinute.setItems(FXCollections.observableArrayList((IntStream.rangeClosed(1, 59).mapToObj(i -> String.format("%02d", i)).collect(Collectors.toList()))));
         comboBox1.setVisible(false);
         comboBoxMinute.setVisible(false);
         checkFileButton.setVisible(false);
