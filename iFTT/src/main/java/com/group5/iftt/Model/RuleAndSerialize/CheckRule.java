@@ -26,21 +26,17 @@ public class CheckRule {
     // Questo metodo è chiamato periodicamente, esamina tutte le regole presenti in RuleService.
     // Se una regola è abilitata, non è in sleeping e il suo trigger è attivato, esegue l'azione associata alla regola
     private void check() {
-        Platform.runLater(() -> { // Garantisce che le operazioni siano eseguite nel thread di JavaFX
+        Platform.runLater(() -> {
             for (Rule rule : RuleService.getInstance()) {
-                RuleSleeping sleepingRule = null;
-                if (rule instanceof RuleSleeping) {
-                    sleepingRule = (RuleSleeping) rule;
-                    if (sleepingRule.isSleeping()) {
-                        // Se la regola è in sleeping, salto il controllo
-                        continue;
-                    }
+                if (rule.isSleeping()) {
+                    // Se la regola è in sleeping, salta il controllo
+                    continue;
                 }
 
-                if (sleepingRule.isTriggered() && !sleepingRule.isActionStarted() && sleepingRule.isActive() && sleepingRule.isWakeUp()) {
-                    sleepingRule.whenWakeUp();
-                    sleepingRule.getAction().startAction();
-                    sleepingRule.setActionStarted(true);
+                if (rule.isTriggered() && !rule.isActionStarted() && rule.isActive() && rule.isWakeUp()) {
+                    rule.whenWakeUp();
+                    rule.getAction().startAction();
+                    rule.setActionStarted(true);
                     break;
                 }
             }

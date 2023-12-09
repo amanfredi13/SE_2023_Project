@@ -2,7 +2,6 @@ package com.group5.iftt.Controller;
 import com.group5.iftt.Model.Actions.*;
 import com.group5.iftt.Model.RuleAndSerialize.Rule;
 import com.group5.iftt.Model.RuleAndSerialize.RuleService;
-import com.group5.iftt.Model.RuleAndSerialize.RuleSleeping;
 import com.group5.iftt.Model.RuleAndSerialize.SerializeList;
 import com.group5.iftt.Model.TriggerClassStates.*;
 import com.group5.iftt.Model.ActionClassStates.*;
@@ -21,9 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -170,25 +167,19 @@ public class AddActionController implements Initializable {
 
     @FXML
     private void addAction() {
-       // Rule rule = new Rule(); //inizializzo rule vuota che verrà composta estraendo i dati ai vari campi
-
-        Rule rule;
+        Rule rule = new Rule(); //inizializzo rule vuota che verrà composta estraendo i dati ai vari campi
 
 
         if (repeatCheckBox.isSelected()) {
-           rule = Rule.createRule(true);  // Regola di tipo RuleSleeping
+            // Ottengo giorni, ore e minuti dagli Spinner
+            int days = repeatDaySpinner.getValue();
+            int hours = repeatHoursSpinner.getValue();
+            int minutes = repeatMinutesSpinner.getValue();
 
-                // Ottengo giorni, ore e minuti dagli Spinner
-                int days = repeatDaySpinner.getValue();
-                int hours =  repeatHoursSpinner.getValue();
-                int minutes = repeatMinutesSpinner.getValue();
-
-            ((RuleSleeping) rule).setRepeatValues(days, hours, minutes);
-            ((RuleSleeping) rule).whenWakeUp();
-
-        } else {
-            rule = Rule.createRule(false);  // Regola di tipo Rule
+            rule.setRepeatValues(days, hours, minutes);
+            rule.whenWakeUp();
         }
+
 
         String ruleName = nameTextField.getText();
         if (ruleName.isEmpty()) {

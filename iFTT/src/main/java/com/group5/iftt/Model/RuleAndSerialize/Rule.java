@@ -13,14 +13,10 @@ public class Rule implements Serializable {
     private transient ObjectProperty<Action> action;
     private transient StringProperty status;
     private boolean actionStarted = false;
-
-    public static Rule createRule(boolean isSleeping) {
-        if (isSleeping) {
-            return new RuleSleeping();
-        } else {
-            return new Rule();
-        }
-    }
+    private LocalDateTime wakeUp;
+    private int days;
+    private int hours;
+    private int minutes;
 
     public Rule(String name,Action action, Trigger trigger, String status){
         this.name = new SimpleStringProperty(name);
@@ -73,6 +69,42 @@ public class Rule implements Serializable {
         this.trigger= new SimpleObjectProperty<>(trigger);
         this.status = new SimpleStringProperty(status);
         this.actionStarted = actionstarted;
+    }
+
+
+    public LocalDateTime getWakeUp() {
+        return wakeUp;
+    }
+
+    public void setWakeUp(LocalDateTime wakeUp) {
+        this.wakeUp = wakeUp;
+    }
+
+    public boolean isSleeping() {
+        if (isWakeUp()) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setRepeatValues(int days, int hours, int minutes) {
+        this.days = days;
+        this.hours = hours;
+        this.minutes = minutes;
+    }
+
+    // Metodo utilizzando per impostare i valori di ripetizione per specificare quando una regola dev'essere attivata
+    public void whenWakeUp() {
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime plus = today.plusDays(days).plusHours(hours).plusMinutes(minutes);
+        this.setWakeUp(plus);
+    }
+    // Questo metodo controlla se è arrivato il momento di attivare la regola.
+    public boolean isWakeUp() {
+        LocalDateTime today = LocalDateTime.now();
+        if (this.getWakeUp() == null) return true; // La regola è sempre sveglia se la sveglia è nulla
+        int compare = today.compareTo(this.getWakeUp());
+        return compare >= 0;
     }
 
 
