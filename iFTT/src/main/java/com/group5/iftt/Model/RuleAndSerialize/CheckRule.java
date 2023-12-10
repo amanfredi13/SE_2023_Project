@@ -11,7 +11,7 @@ public class CheckRule {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
-    CheckRule() {
+    public CheckRule() {
         // Esegui il controllo ogni secondo
         scheduler.scheduleAtFixedRate(this::check, 0, 1, TimeUnit.SECONDS);
     }

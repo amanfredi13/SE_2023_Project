@@ -1,6 +1,7 @@
 package com.group5.iftt.Model;
 
 
+import com.group5.iftt.Model.Actions.FileDeleteAction;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileDeleteActionTest {
 
     @Test
-    void testStartAction() throws IOException {
+    public void testStartAction() throws IOException {
         // Crea un oggetto FileDeleteAction per il test
-        String filePath = "C:/Users/admin/OneDrive/Desktop/prove/binaries.txt";
+        String filePath = "src/test/componenti_test/binaries.txt";
         FileDeleteAction fileDeleteAction = new FileDeleteAction(filePath);
 
 
@@ -27,7 +28,7 @@ public class FileDeleteActionTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         // Crea un oggetto FileDeleteAction
         FileDeleteAction fileDeleteAction = new FileDeleteAction();
 
@@ -37,12 +38,12 @@ public class FileDeleteActionTest {
     }
 
     @Test
-    void testSetFilePath() {
+    public void testSetFilePath() {
         // Crea un oggetto FileDeleteAction
         FileDeleteAction fileDeleteAction = new FileDeleteAction();
 
         // Imposta il percorso del file
-        String filePath = "C:/Users/admin/OneDrive/Desktop/prove/binaries.txt";
+        String filePath = "src/test/componenti_test/binaries.txt";
         fileDeleteAction.setFilePath(filePath);
 
         // Verifica che il valore sia stato impostato correttamente

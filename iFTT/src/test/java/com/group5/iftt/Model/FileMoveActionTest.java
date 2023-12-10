@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileMoveActionTest {
 
     @Test
-    void testStartAction() throws IOException {
+    public void testStartAction() throws IOException {
         // Crea un oggetto FileMoveAction per il test
-        String sourceFilePath = "C:/Users/admin/OneDrive/Desktop/prove/binaries.txt";
-        String destinationFolderPath = "C:/Users/admin/OneDrive/Desktop/prove/cartella";
+        String sourceFilePath = "src/test/componenti_test/binaries.txt";
+        String destinationFolderPath = "src/test/componenti_test/componenti_test2";
         FileMoveAction fileMoveAction = new FileMoveAction(sourceFilePath, destinationFolderPath);
 
       fileMoveAction.setMoveFile(sourceFilePath, destinationFolderPath);
@@ -35,7 +35,7 @@ public class FileMoveActionTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         // Crea un oggetto FileMoveAction
         FileMoveAction fileMoveAction = new FileMoveAction();
 
@@ -50,8 +50,8 @@ public class FileMoveActionTest {
         FileMoveAction fileMoveAction = new FileMoveAction();
 
         // Imposta il file di origine e la cartella di destinazione
-        String sourceFilePath = "C:/Users/admin/OneDrive/Desktop/prove/binaries.txt";
-        String destinationFolderPath = "C:/Users/admin/OneDrive/Desktop/prove/cartella";
+        String sourceFilePath = "src/test/componenti_test/binaries.txt";
+        String destinationFolderPath = "src/test/componenti_test/componenti_test2";
         fileMoveAction.setMoveFile(sourceFilePath, destinationFolderPath);
 
         // Verifica che i valori siano stati impostati correttamente

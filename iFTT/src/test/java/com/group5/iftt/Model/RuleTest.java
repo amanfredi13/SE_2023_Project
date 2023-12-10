@@ -1,10 +1,15 @@
 package com.group5.iftt.Model;
 
+import com.group5.iftt.Model.Actions.Action;
+import com.group5.iftt.Model.Actions.ShowDialogBoxAction;
+import com.group5.iftt.Model.RuleAndSerialize.Rule;
+import com.group5.iftt.Model.Triggers.TimeOfDayTrigger;
+import com.group5.iftt.Model.Triggers.Trigger;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RuleTest {
+public class RuleTest {
 
     @Test
     public void testSettersAndGetters() {

@@ -1,16 +1,17 @@
 package com.group5.iftt.Model;
 
 
+import com.group5.iftt.Model.Actions.PlayAudioFileAction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayAudioFileActionTest {
+public class PlayAudioFileActionTest {
 
     @Test
-    void audioAction_PlaysAudioWithoutExceptions() {
+    public void audioAction_PlaysAudioWithoutExceptions() {
         // Specifica il percorso del file audio di test
-        String validPath = "notifica.wav";
+        String validPath = "src/test/componenti_test/notifica.wav";
 
         // Crea un'istanza di PlayAudioFileAction con il percorso specificato
         PlayAudioFileAction audioAction = new PlayAudioFileAction(validPath);
@@ -23,9 +24,9 @@ class PlayAudioFileActionTest {
     }
 
     @Test
-    void startAction_PlaysAudioWithoutExceptions() {
+    public void startAction_PlaysAudioWithoutExceptions() {
         // Specifica il percorso del file audio di test
-        String validPath = "notifica.wav";
+        String validPath = "src/test/componenti_test/notifica.wav";
 
         // Crea un'istanza di PlayAudioFileAction con il percorso specificato
         PlayAudioFileAction audioAction = new PlayAudioFileAction(validPath);
@@ -38,7 +39,7 @@ class PlayAudioFileActionTest {
     }
 
     @Test
-    void toString_ReturnsCorrectString() {
+    public void toString_ReturnsCorrectString() {
         // Crea un'istanza di PlayAudioFileAction senza specificare il percorso
         PlayAudioFileAction audioAction = new PlayAudioFileAction();
 

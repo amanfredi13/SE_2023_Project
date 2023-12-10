@@ -1,5 +1,6 @@
 package com.group5.iftt.Model;
 
+import com.group5.iftt.Model.Actions.WriteEofAction;
 import javafx.application.Platform;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
@@ -10,11 +11,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
-class WriteEofActionTest {
+public class WriteEofActionTest {
     @Test
     public void testWriteEofAction(){
         // Set up test data
-        String testFilePath = "src/test/java/com/group5/iftt/Model/TestFiles/fileText.txt";
+        String testFilePath = "src/test/componenti_test/fileText.txt";
         String testStringToWrite = "TestString";
 
         // Create an instance of WriteEofAction
@@ -51,7 +52,7 @@ class WriteEofActionTest {
     @Test
     public void testWriteEofActionWithEmptyString(){
         // Set up test data
-        String testFilePath = "src/test/java/com/group5/iftt/Model/TestFiles/fileText.txt";
+        String testFilePath = "src/test/componenti_test/fileText.txt";
         String testStringToWrite = "";
 
         // Create an instance of WriteEofAction

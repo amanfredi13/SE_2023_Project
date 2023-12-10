@@ -60,7 +60,7 @@ public class AddActionController implements Initializable {
     @FXML
     private DatePicker calendar;
 
-    private static final String BINARIES_FILEPATH = "iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
+    private static final String BINARIES_FILEPATH = "src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
     private String selectedPathTrigger;
     private String selectedPathAction;
     private File SelectedFile;

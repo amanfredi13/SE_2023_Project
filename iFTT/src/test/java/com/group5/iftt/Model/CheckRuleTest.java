@@ -1,11 +1,12 @@
 package com.group5.iftt.Model;
+import com.group5.iftt.Model.RuleAndSerialize.CheckRule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CheckRuleTest {
+public class CheckRuleTest {
     private CheckRule checkRule;
 
     @Before

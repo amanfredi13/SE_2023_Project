@@ -1,5 +1,6 @@
 package com.group5.iftt.Model;
 
+import com.group5.iftt.Model.Actions.ExecuteProgramAction;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -7,11 +8,11 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ExecuteProgramActionTest {
+public class ExecuteProgramActionTest {
     @Test
-    void testStartAction_SuccessfulExecution() {
+   public void testStartAction_SuccessfulExecution() {
         // Arrange
-        String programPath = "/Users/alessandromanfredi/Desktop/script_prova/stampaNome.sh";
+        String programPath = "src/test/componenti_test/stampaNome.sh";
         String parameters = "Hello, World!";
         ExecuteProgramAction executeProgramAction = new ExecuteProgramAction(programPath, parameters);
 
@@ -31,10 +32,10 @@ class ExecuteProgramActionTest {
     }
 
     @Test
-    void testStartAction_FailedExecution() {
+    public void testStartAction_FailedExecution() {
         // Arrange
-        String programPath = "/Users/alessandromanfredi/Desktop/script_prova/failScript.sh";
-        String parameters = "ciao"; //devo fare uno script di prova che so che non ccetta un certo parametro e dovrebbe funzionare
+        String programPath = "src/test/componenti_test/failScript.sh";
+        String parameters = "ciao"; //devo fare uno script di prova che so che non accetta un certo parametro e dovrebbe funzionare
         ExecuteProgramAction executeProgramAction = new ExecuteProgramAction(programPath, parameters);
 
         // Redirect System.err for testing

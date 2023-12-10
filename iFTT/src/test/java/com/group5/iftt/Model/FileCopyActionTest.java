@@ -1,6 +1,7 @@
 package com.group5.iftt.Model;
 
-import com.group5.iftt.Model.FileCopyAction;
+;
+import com.group5.iftt.Model.Actions.FileCopyAction;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileCopyActionTest {
 
     @Test
-    void testStartAction() throws IOException {
+    public void testStartAction() throws IOException {
         // Crea un oggetto FileCopyAction per il test
-        String sourceFilePath = "C:/Users/admin/OneDrive/Desktop/prove/binaries.txt";
-        String destinationFolderPath = "C:/Users/admin/OneDrive/Desktop/prove/cartella";
+        String sourceFilePath = "src/test/componenti_test/binaries.txt";
+        String destinationFolderPath = "src/test/componenti_test/componenti_test2";
         FileCopyAction fileCopyAction = new FileCopyAction(sourceFilePath, destinationFolderPath);
 
         // Esegui l'azione di copia del file
@@ -33,7 +34,7 @@ public class FileCopyActionTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         // Crea un oggetto FileCopyAction
         FileCopyAction fileCopyAction = new FileCopyAction();
 
@@ -43,13 +44,13 @@ public class FileCopyActionTest {
     }
 
     @Test
-    void testSetCopyFile() {
+    public void testSetCopyFile() {
         // Crea un oggetto FileCopyAction
         FileCopyAction fileCopyAction = new FileCopyAction();
 
         // Imposta il file di origine e la cartella di destinazione
-        String sourceFilePath = "C:/Users/admin/OneDrive/Desktop/prove/binaries.txt";
-        String destinationFolderPath = "C:/Users/admin/OneDrive/Desktop/prove";
+        String sourceFilePath = "src/test/componenti_test/binaries.txt";
+        String destinationFolderPath = "src/test/componenti_test/componenti_test2";
         fileCopyAction.setCopyFile(sourceFilePath, destinationFolderPath);
 
         // Verifica che i valori siano stati impostati correttamente utilizzando i metodi getter

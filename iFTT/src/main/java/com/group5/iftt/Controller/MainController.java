@@ -29,7 +29,7 @@ public class MainController {
     private TableColumn<Rule, Action> actionColumn;
     @FXML
     private TableColumn<Rule, String> statusColumn;
-    private static final String BINARIES_FILEPATH = "iFTT/src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
+    private static final String BINARIES_FILEPATH = "src/main/java/com/group5/iftt/componenti_prog/binaries.txt";
     ObservableList<Rule> rules = RuleService.getInstance();
 
     public void initialize() {

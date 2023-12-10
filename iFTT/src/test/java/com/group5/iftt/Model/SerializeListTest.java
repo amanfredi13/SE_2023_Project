@@ -1,23 +1,28 @@
 package com.group5.iftt.Model;
 
+import com.group5.iftt.Model.Actions.PlayAudioFileAction;
+import com.group5.iftt.Model.RuleAndSerialize.Rule;
+import com.group5.iftt.Model.RuleAndSerialize.SerializeList;
+import com.group5.iftt.Model.Triggers.TimeOfDayTrigger;
 import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.util.List;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class SerializeListTest {
+public class SerializeListTest {
 
     private ObservableList<Rule> ruleList;
     private SerializeList serializeList;
     private String testFilePath = "testSerializeList.txt";
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // Initialization of the rule list for the test
         ruleList = FXCollections.observableArrayList(
                 new Rule("Rule1", new PlayAudioFileAction(), new TimeOfDayTrigger("10", "30"), "Enabled"),
@@ -29,7 +34,7 @@ class SerializeListTest {
     }
 
     @Test
-    void serializeAndDeserialize() {
+    public void serializeAndDeserialize() {
         // Serialization
         serializeList.serialize();
 
