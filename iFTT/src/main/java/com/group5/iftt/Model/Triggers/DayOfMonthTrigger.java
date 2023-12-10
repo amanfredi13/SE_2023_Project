@@ -13,7 +13,7 @@ public class DayOfMonthTrigger implements Trigger, Serializable {
 
     @Override
     public String toString() {
-        return "Giorno del mese";
+        return "Day of month";
     }
 
     public DayOfMonthTrigger() {

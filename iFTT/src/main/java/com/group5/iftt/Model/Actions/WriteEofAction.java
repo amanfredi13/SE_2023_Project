@@ -22,10 +22,9 @@ public WriteEofAction(){}
     public void startAction() {
             // Scrivi la stringa alla fine del file
             try {
-                // Crea un oggetto Path
                 Path percorso = Paths.get(filepath);
 
-                // Usa un BufferedWriter per scrivere alla fine del file senza sovrascrivere
+                // Usa un BufferedWriter per scrivere alla fine del file
                 BufferedWriter writer = new BufferedWriter(new FileWriter(percorso.toString(), true));
 
                 // Scrivi la stringa alla fine del file
@@ -40,7 +39,7 @@ public WriteEofAction(){}
 
     }
     public String toString(){
-        return "Scrittura EOF";
+        return "Write EOF";
     }
 }
 

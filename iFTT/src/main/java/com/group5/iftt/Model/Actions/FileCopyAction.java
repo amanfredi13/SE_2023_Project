@@ -49,7 +49,7 @@ public class FileCopyAction implements Action, Serializable {
         return destinationFolderPath;
     }
     public String toString(){
-        return "Copia File";
+        return "Copy file";
     }
 }
 

@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class DayofMonthState implements TriggerState {
+public class DayOfMonthState implements TriggerState {
 
     @Override
     public void configureUI(ComboBox<String> comboBox1, ComboBox<String> comboBoxMinute, Button checkFileButton, TextArea messageTextArea, DatePicker calendar, TextField triggerTextField) {

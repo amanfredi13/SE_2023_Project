@@ -16,20 +16,18 @@ public class SerializeList implements Serializable{
 
     public void serialize() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
-            ArrayList<Rule> serializableList = new ArrayList<>(rule_list);
-            oos.writeObject(serializableList);
+            ArrayList<Rule> serializableList = new ArrayList<>(rule_list); //Creo arrayList di appoggio.
+            oos.writeObject(serializableList); //Scrivo nella lista di appoggio.
         } catch (IOException e) {
             System.out.printf("Problema IOException in SerializeList");
         }
     }
 
     public static <Rule extends Serializable> ArrayList<Rule> deserialize(String filePath) {
-        ArrayList<Rule> deserializedList = new ArrayList();
+        ArrayList<Rule> deserializedList = new ArrayList(); //Creo lista di appoggio.
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-             deserializedList = (ArrayList<Rule>) ois.readObject();
-
-                 return deserializedList;
-
+            deserializedList = (ArrayList<Rule>) ois.readObject(); //Leggo gli oggetti nel file di testo con i dati serializzati.
+            return deserializedList; //Restitusico dati letti.
         } catch (FileNotFoundException e) {
             System.out.printf("Errore: File non trovato");
         } catch (EOFException e) {
@@ -37,7 +35,7 @@ public class SerializeList implements Serializable{
         }catch (IOException | ClassNotFoundException e) {
             System.out.printf("Errore: Problema con l'I/O");
         }
-        // Se si verificano errori, restituisci una lista vuota
+        // Se si verificano errori o semplicemente il file non è mai stato scritto e quindi non ci sono dati da deserializzare, restituisci una lista vuota.
         System.out.printf("Restituisco una lista vuota");
         return deserializedList;
     }

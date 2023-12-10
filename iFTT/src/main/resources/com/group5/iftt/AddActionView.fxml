@@ -17,7 +17,7 @@
 
 <AnchorPane prefHeight="514.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group5.iftt.Controller.AddActionController">
     <!-- Header -->
-    <HBox layoutY="66.0" prefHeight="35.0" prefWidth="652.0">
+    <HBox layoutY="66.0" prefHeight="35.0" prefWidth="773.0">
         <children>
             <Label text="Rule name:">
             <HBox.margin>
@@ -47,32 +47,32 @@
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addFileTrigger" prefHeight="26.0" prefWidth="77.0" text="Load file">
+            <Button fx:id="checkFileButton" mnemonicParsing="false" onAction="#addFileTrigger" prefHeight="26.0" prefWidth="93.0" text="Load file">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></Button>
-         <TextField fx:id="triggerTextField" promptText="Insert ...">
+         <TextField fx:id="triggerTextField" prefHeight="25.0" prefWidth="105.0" promptText="Insert ...">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin>
          </TextField>
-            <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="98.0">
+            <ComboBox fx:id="comboBox1" prefHeight="26.0" prefWidth="95.0">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
-            <ComboBox fx:id="comboBoxMinute" prefHeight="26.0" prefWidth="98.0" promptText="Min">
+            <ComboBox fx:id="comboBoxMinute" prefHeight="26.0" prefWidth="95.0" promptText="Min">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin></ComboBox>
             <DatePicker fx:id="calendar" prefHeight="25.0" prefWidth="145.0" promptText="Insert a date...">
             <HBox.margin>
-               <Insets left="10.0" />
+               <Insets left="10.0" right="10.0" />
             </HBox.margin></DatePicker>
         </children>
     </HBox>
 
     <!-- Action Section -->
-    <HBox layoutY="144.0" prefHeight="43.0" prefWidth="652.0">
+    <HBox layoutY="144.0" prefHeight="43.0" prefWidth="773.0">
         <children>
             <Label text="Action:">
             <HBox.margin>
@@ -98,7 +98,7 @@
     </HBox>
 
     <!-- Status Section -->
-    <HBox layoutY="185.0" prefHeight="50.0" prefWidth="652.0">
+    <HBox layoutY="185.0" prefHeight="50.0" prefWidth="773.0">
         <children>
             <Label text="Status:">
             <HBox.margin>
@@ -126,9 +126,9 @@
     <TextArea fx:id="messageTextArea" layoutX="14.0" layoutY="234.0" prefHeight="59.0" prefWidth="200.0" promptText="Insert Text..." />
 
     <!-- Buttons -->
-    <Button fx:id="addButton" layoutX="525.0" layoutY="474.0" onAction="#addAction" text="Add" />
-    <Button fx:id="cancelButton" layoutX="582.0" layoutY="474.0" onAction="#cancel" text="Cancel" />
-   <Text fill="#4caf50" layoutX="231.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rule Customization">
+    <Button fx:id="addButton" layoutX="637.0" layoutY="474.0" onAction="#addAction" text="Add" />
+    <Button fx:id="cancelButton" layoutX="702.0" layoutY="474.0" onAction="#cancel" text="Cancel" />
+   <Text fill="#4caf50" layoutX="291.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rule Customization">
       <font>
          <Font name="Arial" size="22.0" />
       </font>

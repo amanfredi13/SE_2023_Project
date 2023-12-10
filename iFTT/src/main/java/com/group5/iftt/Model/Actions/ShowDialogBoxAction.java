@@ -37,7 +37,7 @@ public class ShowDialogBoxAction implements Action, Serializable {
     }
 
     public String toString() {
-        return "Avviso popup";
+        return "Show popup";
     }
 
     public String getMessage() {

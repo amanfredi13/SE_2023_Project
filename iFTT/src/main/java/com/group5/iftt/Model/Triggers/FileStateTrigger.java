@@ -12,7 +12,6 @@ public class FileStateTrigger implements Trigger, Serializable {
         this.filename = filename;
     }
     public FileStateTrigger(){}
-    public String toString(){ return "Esistenza File";}
 
     @Override
     public boolean isValidate() {//se entrambi i campi sono vuoti restituisco falso
@@ -26,4 +25,5 @@ public class FileStateTrigger implements Trigger, Serializable {
             return file.exists();
         }
     }
-    }
+    public String toString(){ return "File state";}
+}

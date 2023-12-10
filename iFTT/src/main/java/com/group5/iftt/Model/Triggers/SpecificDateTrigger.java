@@ -20,7 +20,7 @@ public class SpecificDateTrigger implements Trigger, Serializable {
 
     @Override
     public String toString() {
-        return "Giorno specifico";
+        return "Specific date";
     }
 
     public SpecificDateTrigger() {
