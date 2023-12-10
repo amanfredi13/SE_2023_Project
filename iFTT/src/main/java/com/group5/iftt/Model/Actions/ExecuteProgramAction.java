@@ -36,7 +36,7 @@ public class ExecuteProgramAction implements Action, Serializable {
                 System.err.println("Errore durante l'esecuzione dello script. Codice di uscita: " + exitCode);
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            System.err.println("Errore durante l'esecuzione dello script. Codice di uscita: 1");
         }
     }
 }

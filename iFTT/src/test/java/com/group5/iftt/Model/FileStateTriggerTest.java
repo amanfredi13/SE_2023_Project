@@ -37,6 +37,26 @@ class FileStateTriggerTest {
         FileStateTrigger trigger = new FileStateTrigger("/path/to/directory", "exampleFile.txt");
 
         // Verifica che il metodo toString restituisca la stringa attesa
-        assertEquals("Esistenza File", trigger.toString());
+        assertEquals("File state", trigger.toString());
+    }
+
+    @Test
+    public void testIsValidateWithEmptyFileName() {
+        // Crea un oggetto FileStateTrigger con un percorso esistente e un nome di file vuoto
+        FileStateTrigger trigger = new FileStateTrigger("iFTT/src/test/componenti_test", "");
+
+        // Verifica che isValidate restituisca false perché il nome del file è vuoto
+        assertFalse(trigger.isValidate());
+    }
+
+    @Test
+    public void testIsValidateWithEmptyFilePath() {
+        // Crea un oggetto FileStateTrigger con un percorso vuoto e un nome di file esistente
+        FileStateTrigger trigger = new FileStateTrigger("", "binaries.txt");
+
+        // Verifica che isValidate restituisca false perché il percorso è vuoto
+        assertFalse(trigger.isValidate());
+
+
     }
 }

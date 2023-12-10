@@ -8,20 +8,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileSizeTriggerTest {
     @Test
     public void testIsValidateWhenFileExistsAndExceedsMaxSize() {
-        // Crea un oggetto FileSizeTrigger con un percorso esistente e una dimensione massima sufficientemente grande
-        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binariesMax.txt", "10");
+        // Crea un oggetto FileSizeTrigger con un percorso esistente e una dimensione massima troppo grande
+        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/ExceedSizefile.txt", "10000");
 
-        // Verifica che isValidate restituisca true perché la dimensione del file supera quella specificata
-        assertTrue(trigger.isValidate());
+        // Verifica che isValidate restituisca false perché la dimensione del file supera quella specificata
+        assertFalse(trigger.isValidate());
     }
 
     @Test
     public void testIsValidateWhenFileExistsAndDoesNotExceedMaxSize() {
         // Crea un oggetto FileSizeTrigger con un percorso esistente e una dimensione massima maggiore della dimensione del file
-        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binaries.txt", "10000");
+        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binaries.txt", "10");
 
-        // Verifica che isValidate restituisca false perché la dimensione del file non supera quella specificata
-        assertFalse(trigger.isValidate());
+        // Verifica che isValidate restituisca true perché la dimensione del file non supera quella specificata
+        assertTrue(trigger.isValidate());
     }
 
     @Test
@@ -34,11 +34,18 @@ public class FileSizeTriggerTest {
     }
 
     @Test
+    public void testConstructorWithInvalidMaxSize() {
+        // Verifica che il costruttore generi un'eccezione IllegalArgumentException con una dimensione massima nulla o negativa.
+        assertThrows(IllegalArgumentException.class, () -> new FileSizeTrigger("src/test/componenti_test/binaries.txt", "0").isValidate());
+        assertThrows(IllegalArgumentException.class, () -> new FileSizeTrigger("src/test/componenti_test/binaries.txt", "-10").isValidate());
+    }
+
+    @Test
     public void testIsValidateWithInvalidMaxSize() {
         // Crea un oggetto FileSizeTrigger con un percorso esistente e una dimensione massima non valida (non numerica)
         FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binaries.txt", "invalid");
 
-        // Verifica che isValidate generi un'eccezione NumberFormatException perché la dimensione massima non è un numero valido
-        assertThrows(NumberFormatException.class, trigger::isValidate);
+        // Verifica che isValidate generi un'eccezione IllegalArgumentException perché la dimensione massima non è un numero valido
+        assertThrows( NumberFormatException.class, trigger::isValidate);
     }
 }

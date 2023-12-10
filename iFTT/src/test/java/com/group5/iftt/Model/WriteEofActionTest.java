@@ -1,12 +1,11 @@
 package com.group5.iftt.Model;
 
+import com.group5.iftt.Model.Actions.ExecuteProgramAction;
 import com.group5.iftt.Model.Actions.WriteEofAction;
 import javafx.application.Platform;
 import org.junit.jupiter.api.Test;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,15 +16,11 @@ public class WriteEofActionTest {
         // Set up test data
         String testFilePath = "src/test/componenti_test/fileText.txt";
         String testStringToWrite = "TestString";
-
-        // Create an instance of WriteEofAction
         WriteEofAction writeEofAction = new WriteEofAction(testFilePath, testStringToWrite);
-
-        // Perform the action using Platform.runLater
 
             writeEofAction.startAction();
 
-            // Verify that the string is written to the file
+            // Verifico che la stringa sia scritta sul file
             try (BufferedReader reader = new BufferedReader(new FileReader(testFilePath))) {
                 String line;
                 boolean stringFound = false;
@@ -40,43 +35,47 @@ public class WriteEofActionTest {
                 throw new RuntimeException(e);
             }
 
-            // Clean up: Delete the test file
-            try {
-                Files.deleteIfExists(Paths.get(testFilePath));
-            } catch (IOException e) {
-                fail("Failed to delete the test file.");
-            }
-
     }
 
     @Test
-    public void testWriteEofActionWithEmptyString(){
+    public void testWriteEofActionWithEmptyString() {
         // Set up test data
         String testFilePath = "src/test/componenti_test/fileText.txt";
         String testStringToWrite = "";
-
-        // Create an instance of WriteEofAction
         WriteEofAction writeEofAction = new WriteEofAction(testFilePath, testStringToWrite);
+
 
         writeEofAction.startAction();
 
+        // Verifico che anche il caso di scrittura di una stringa vuota sia permesso anche se già da UI ci si assicura che tale campo non sia vuoto.
+        try (BufferedReader reader = new BufferedReader(new FileReader(testFilePath))) {
+            String line = reader.readLine();
+            assertNotNull(line, "File is empty.");
+            assertEquals(testStringToWrite, line, "String does not match the expected value.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            // Verify that an empty string is written to the file
-            try (BufferedReader reader = new BufferedReader(new FileReader(testFilePath))) {
-                String line = reader.readLine();
-                assertNotNull(line, "File is empty.");
-                assertEquals(testStringToWrite, line, "String does not match the expected value.");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+    @Test
+    public void testWriteEofActionWithNonExistentFile() {
+        // Imposto variabili per il test
+        String nonExistentFilePath = "src/test/componenti_test/nonExistentFile.txt";
+        String testStringToWrite = "TestString";
+        WriteEofAction writeEofAction = new WriteEofAction(nonExistentFilePath, testStringToWrite);
 
-            // Clean up: Delete the test file
-            try {
-                Files.deleteIfExists(Paths.get(testFilePath));
-            } catch (IOException e) {
-                fail("Failed to delete the test file.");
-            }
+        // Redirect System.err per fare testing
+        ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(errorStream));
 
+        //Eseguo l'azione
+        writeEofAction.startAction();
+
+        // Restore System.err
+        System.setErr(System.err);
+
+        String expectedError = "Errore durante la scrittura del file: Il percorso del file non esiste: src/test/componenti_test/nonExistentFile.txt\n";
+        assertEquals(expectedError, errorStream.toString());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.group5.iftt.Model;
 
 import com.group5.iftt.Model.Actions.PlayAudioFileAction;
+import com.group5.iftt.Model.Actions.ShowDialogBoxAction;
 import com.group5.iftt.Model.RuleAndSerialize.Rule;
 import com.group5.iftt.Model.RuleAndSerialize.SerializeList;
 import com.group5.iftt.Model.Triggers.TimeOfDayTrigger;
@@ -23,37 +24,38 @@ public class SerializeListTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialization of the rule list for the test
+        // Inizializzazione rulelist per il test
         ruleList = FXCollections.observableArrayList(
                 new Rule("Rule1", new PlayAudioFileAction(), new TimeOfDayTrigger("10", "30"), "Enabled"),
-                new Rule("Rule2", new PlayAudioFileAction(), new TimeOfDayTrigger("17", "30"), "Enabled")
+                new Rule("Rule2", new PlayAudioFileAction(), new TimeOfDayTrigger("17", "30"), "Enabled"),
+                new Rule("Rule3", new ShowDialogBoxAction(), new TimeOfDayTrigger("18","30"), "Enabled")
         );
 
-        // File path for the test
+
         serializeList = new SerializeList(ruleList, testFilePath);
     }
 
     @Test
     public void serializeAndDeserialize() {
-        // Serialization
+
         serializeList.serialize();
 
-        // Check that the output file exists
+        // Controllo che l'output file esista
         File outputFile = new File(testFilePath);
         assertTrue(outputFile.exists());
 
-        // Deserialization
+        //Deserializzo
         List<Rule> deserializedList = SerializeList.deserialize(testFilePath);
 
-        // Check that the deserialized list is not null
+        // Mi assicuro che non sia nulla
         assertNotNull(deserializedList);
 
-        // Check each rule in the list
+        // Controllo ogni regola nella lista
         for (int i = 0; i < ruleList.size(); i++) {
             Rule originalRule = ruleList.get(i);
             Rule deserializedRule = deserializedList.get(i);
 
-            // Print before and after the comparison
+
             System.out.println("Original Rule: " + originalRule);
             System.out.println("Deserialized Rule: " + deserializedRule);
 
@@ -67,4 +69,35 @@ public class SerializeListTest {
 
         }
     }
+
+    @Test
+    public void testDeserializeEmptyFile() {
+        // Create an empty file
+        File emptyFile = new File("emptySerializeList.txt");
+        SerializeList.deserialize(emptyFile.getPath());
+
+        // Ensure that no exceptions are thrown
+        assertTrue(true);
+    }
+
+    @Test
+    public void testDeserializeNonExistentFile() {
+        // Tentativo di accesso a un file non esistente
+        List<Rule> deserializedList = SerializeList.deserialize("nonExistentFile.txt");
+
+        // Mi assicuro che la lista di deserealizzazione sia vuota
+        assertTrue(deserializedList.isEmpty());
+    }
+
+    @Test
+    public void testDeserializeInvalidData() {
+        // Prendo un file con dati non deserializzabili
+        File invalidDataFile = new File("iFTT/src/test/componenti_test/ExceedSizefile.txt");
+        SerializeList.deserialize(invalidDataFile.getPath());
+
+       //Mi assicuro che non si sollevino eccezioni nel caso in cui provo a deserializzare un file senza dati serializzabili
+        assertTrue(true);
+    }
+
+
 }
