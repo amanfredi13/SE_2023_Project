@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class PlayAudioFileAction implements Action, Serializable {
    private String filePath;
-   public boolean audioPlayed = false;
+   private boolean audioPlayed = false;
 
     public PlayAudioFileAction(){}
     public PlayAudioFileAction(String filePath){
@@ -18,6 +18,14 @@ public class PlayAudioFileAction implements Action, Serializable {
         if(!audioPlayed){
                 audioAction();
         }}
+
+    public boolean isAudioPlayed() {
+        return audioPlayed;
+    }
+
+    public void setAudioPlayed(boolean audioPlayed) {
+        this.audioPlayed = audioPlayed;
+    }
 
     public void audioAction() {
         File audioFile = new File(filePath);

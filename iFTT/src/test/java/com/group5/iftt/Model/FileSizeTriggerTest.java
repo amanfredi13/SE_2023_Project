@@ -2,7 +2,6 @@ package com.group5.iftt.Model;
 
 import com.group5.iftt.Model.Triggers.FileSizeTrigger;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileSizeTriggerTest {

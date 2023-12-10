@@ -1,6 +1,5 @@
 package com.group5.iftt.Model;
 
-
 import com.group5.iftt.Model.Actions.PlayAudioFileAction;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ public class PlayAudioFileActionTest {
         assertDoesNotThrow(() -> audioAction.audioAction(), "Expected no exception to be thrown");
 
         // Verifica che la variabile audioPlayed sia impostata su true dopo l'azione
-        assertTrue(audioAction.audioPlayed, "Expected audio to be played");
+        assertTrue(audioAction.isAudioPlayed(), "Expected audio to be played");
     }
 
     @Test
@@ -35,7 +34,7 @@ public class PlayAudioFileActionTest {
         assertDoesNotThrow(() -> audioAction.startAction(), "Expected no exception to be thrown");
 
         // Verifica che la variabile audioPlayed sia impostata su true dopo l'azione
-        assertTrue(audioAction.audioPlayed, "Expected audio to be played");
+        assertTrue(audioAction.isAudioPlayed(), "Expected audio to be played");
     }
 
     @Test
@@ -44,7 +43,7 @@ public class PlayAudioFileActionTest {
         PlayAudioFileAction audioAction = new PlayAudioFileAction();
 
         // Verifica che il metodo toString restituisca la stringa corretta
-        assertEquals("Riproduzione Audio", audioAction.toString(), "Expected correct string representation");
+        assertEquals("Play audio", audioAction.toString(), "Expected correct string representation");
     }
 }
 

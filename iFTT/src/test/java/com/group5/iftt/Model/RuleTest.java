@@ -6,6 +6,8 @@ import com.group5.iftt.Model.RuleAndSerialize.Rule;
 import com.group5.iftt.Model.Triggers.TimeOfDayTrigger;
 import com.group5.iftt.Model.Triggers.Trigger;
 import org.junit.jupiter.api.Test;
+import java.time.LocalDateTime;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +60,43 @@ public class RuleTest {
 
         // Print success message
         System.out.println("testActionStarted passed successfully!\n");
+
     }
+
+
+    @Test
+    public void testSetWakeUp() {
+        Rule rule = new Rule("TestRule", new ShowDialogBoxAction(), new TimeOfDayTrigger("12", "30"), "Enabled");
+
+        assertNull(rule.getWakeUp());  // WakeUp dovrebbe essere inizialmente nullo
+
+        LocalDateTime wakeUpTime = LocalDateTime.now().plusHours(2);
+        rule.setWakeUp(wakeUpTime);
+
+        assertEquals(wakeUpTime, rule.getWakeUp());
+    }
+
+    @Test
+    public void testRepeatValues() {
+        // Creo una regola con azione
+        Rule rule = new Rule("TestRule", new ShowDialogBoxAction(), new TimeOfDayTrigger("12", "30"), "Enabled");
+
+        rule.setRepeatValues(1, 2, 30);
+
+        assertEquals(1, rule.getDays());
+        assertEquals(2, rule.getHours());
+        assertEquals(30, rule.getMinutes());
+    }
+
+    @Test
+    public void testWhenWakeUp() {
+        Rule rule = new Rule("TestRule", new ShowDialogBoxAction(), new TimeOfDayTrigger("12", "30"), "Enabled");
+        rule.setRepeatValues(1, 2, 30);
+
+        rule.whenWakeUp();
+
+        assertNotNull(rule.getWakeUp());
+    }
+
 
 }
