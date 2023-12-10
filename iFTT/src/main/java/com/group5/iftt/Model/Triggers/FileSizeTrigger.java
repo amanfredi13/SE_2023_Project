@@ -26,6 +26,6 @@ public class FileSizeTrigger implements Trigger, Serializable {
     }
 
     public String toString(){
-        return "Dimensione File";
+        return "File size";
     }
 }

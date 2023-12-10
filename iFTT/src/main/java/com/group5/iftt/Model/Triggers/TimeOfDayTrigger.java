@@ -14,13 +14,8 @@ public class TimeOfDayTrigger implements Trigger, Serializable {
         this.triggerTime = LocalTime.parse(hour+ ":" + minute); //formatto correttamente l'orario dell'utente oer poterlo confrontare
     }
     @Override
-    /*
-    public String toString() {
-        return triggerTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-    }
-     */
     public String toString(){
-        return "Ora del giorno";
+        return "Time of day";
     }
     public TimeOfDayTrigger(){}
 

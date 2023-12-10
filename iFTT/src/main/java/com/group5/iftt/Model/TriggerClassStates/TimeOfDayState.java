@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 
 public class TimeOfDayState implements TriggerState {
 
-    //userei un costruttore vuoto inutile definirlo
     @Override
     public void configureUI(ComboBox<String> comboBox1, ComboBox<String> comboBoxMinute, Button checkFileButton, TextArea messageTextArea, DatePicker calendar, TextField triggerTextField) {
         comboBox1.setPromptText("Hour");

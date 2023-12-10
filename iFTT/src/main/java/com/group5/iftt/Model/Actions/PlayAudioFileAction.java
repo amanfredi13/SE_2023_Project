@@ -33,7 +33,7 @@ public class PlayAudioFileAction implements Action, Serializable {
         }
     }
     public String toString(){
-        return "Riproduzione Audio";
+        return "Play audio";
     }
 
 }

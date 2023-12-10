@@ -15,7 +15,7 @@ public class DayOfWeekTrigger implements Trigger, Serializable {
 
     @Override
     public String toString() {
-        return "Giorno della settimana";
+        return "Day of week";
     }
 
     public DayOfWeekTrigger() {
@@ -24,7 +24,7 @@ public class DayOfWeekTrigger implements Trigger, Serializable {
     public boolean isValidate() {
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.ITALIAN);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.US);
         String currentDay = sdf.format(new Date()).toLowerCase();
         return currentDay.equals(triggerDay.toLowerCase());
 

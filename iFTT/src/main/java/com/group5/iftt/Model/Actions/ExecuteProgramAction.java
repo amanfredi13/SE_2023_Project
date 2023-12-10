@@ -15,7 +15,7 @@ public class ExecuteProgramAction implements Action, Serializable {
     //Costruttore e toString servono per mostrare le opzioni relative alla classe nell'interfaccia
     public ExecuteProgramAction() {}
     public String toString(){
-        return "Esegui Script";
+        return "Execute script";
     }
 
     @Override

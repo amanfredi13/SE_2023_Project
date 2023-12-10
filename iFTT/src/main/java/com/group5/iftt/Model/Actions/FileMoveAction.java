@@ -42,7 +42,7 @@ public class FileMoveAction implements Action, Serializable {
     }
 
     public String toString() {
-        return "Sposta File";
+        return "Move file";
     }
 
     public String getSourceFilePath() {

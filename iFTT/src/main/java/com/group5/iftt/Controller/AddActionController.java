@@ -110,6 +110,7 @@ public class AddActionController implements Initializable {
         messageTextArea.setVisible(false);
         pathDestButton.setVisible(false);
         calendar.setVisible(false);
+        triggerTextField.setVisible(false);
 
         repeatVBox.setVisible(false);
         // Binding tra la visibilità dalla VBox e il valore della Checkbox
@@ -131,7 +132,7 @@ public class AddActionController implements Initializable {
                     triggerContext.setState(new DayOfWeekState());
                     triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
                 } else if (newValue instanceof DayOfMonthTrigger) {
-                    triggerContext.setState(new TimeOfDayState());
+                    triggerContext.setState(new DayOfMonthState());
                     triggerContext.configureUI(comboBox1, comboBoxMinute, checkFileButton, messageTextArea, calendar, triggerTextField);
                 } else if (newValue instanceof SpecificDateTrigger) {
                     triggerContext.setState(new SpecificDateState());
@@ -216,35 +217,35 @@ public class AddActionController implements Initializable {
         rule.setName(nameTextField.getText());
 
         //COSTRUZIONE TRIGGER
-        if ("Ora del giorno".equals(selectedTrigger.toString())) {
+        if ("Time of day".equals(selectedTrigger.toString())) {
             String selectedHour = comboBox1.getValue().toString();
             String selectedMinute = comboBoxMinute.getValue().toString();
             TimeOfDayTrigger timeOfDayTrigger = new TimeOfDayTrigger(selectedHour, selectedMinute);
             rule.setTrigger(timeOfDayTrigger);
         }
 
-        if ("Giorno della settimana".equals(selectedTrigger.toString())) {
+        if ("Day of week".equals(selectedTrigger.toString())) {
             String selectedDayWeek = comboBox1.getValue().toString();
             DayOfWeekTrigger dayOfWeekTrigger = new DayOfWeekTrigger(selectedDayWeek);
             rule.setTrigger(dayOfWeekTrigger);
         }
 
-        if ("Giorno del mese".equals(selectedTrigger.toString())) {
+        if ("Day of month".equals(selectedTrigger.toString())) {
             String selectedDayMonth = comboBox1.getValue().toString();
             DayOfMonthTrigger dayOfMonthTrigger = new DayOfMonthTrigger(selectedDayMonth);
             rule.setTrigger(dayOfMonthTrigger);
         }
-        if ("Giorno specifico".equals(selectedTrigger.toString())) {
+        if ("Specific date".equals(selectedTrigger.toString())) {
             LocalDate localDate = calendar.getValue();
             SpecificDateTrigger specificDateTrigger = new SpecificDateTrigger(localDate);
             rule.setTrigger(specificDateTrigger);
         }
-        if ("Esistenza file".equals(triggerComboBox.getValue())) {
+        if ("File state".equals(triggerComboBox.getValue())) {
             String filename = triggerTextField.getText();
             FileStateTrigger fileStateTrigger = new FileStateTrigger(selectedPathTrigger, filename);
             rule.setTrigger(fileStateTrigger);
         }
-        if ("Dimensione File".equals(selectedTrigger.toString())) {
+        if ("File size".equals(selectedTrigger.toString())) {
             String bytedim = triggerTextField.getText();
             String filePath = selectedFile.getAbsolutePath();
             FileSizeTrigger fileSizeTrigger = new FileSizeTrigger(filePath, bytedim);
@@ -252,50 +253,50 @@ public class AddActionController implements Initializable {
         }
 
         //COSTRUZIONE ACTION
-        if ("Avviso popup".equals(selectedAction.toString())) {
+        if ("Show popup".equals(selectedAction.toString())) {
             String userMessage = messageTextArea.getText();
             if (!userMessage.isEmpty()) {
                 ShowDialogBoxAction showDialogBoxAction = new ShowDialogBoxAction();
                 showDialogBoxAction.setMessage(userMessage);
                 rule.setAction(showDialogBoxAction);
             } else {
-                showAlert("Messaggio d'avviso", "Inserisci un messaggio per l'avviso popup.");
+                showAlert("Error: ", "Please, insert a valid message for the popup.");
                 return;
             }
         }
-        if ("Riproduzione Audio".equals(selectedAction.toString())) {
+        if ("Play audio".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
             if (!filePath.isEmpty()) {
                 PlayAudioFileAction playAudioFileAction = new PlayAudioFileAction(filePath);
                 rule.setAction(playAudioFileAction);
             } else {
-                showAlert("Errore: ", "Problema con il caricamento del file audio.");
+                showAlert("Error: ", "Can't load the audio file.");
                 return;
             }
         }
-        if ("Scrittura EOF".equals(selectedAction.toString())) {
+        if ("Write EOF".equals(selectedAction.toString())) {
             String writeString = textFieldWriteFile.getText();
             String filePath = selectedFile.getAbsolutePath();
             if (filePath != null && !filePath.isEmpty()) {
                 WriteEofAction editFileAction = new WriteEofAction(filePath, writeString);
                 rule.setAction(editFileAction);
             } else {
-                showAlert("Errore: ", "Problema con il caricamento del file da sovrascrivere");
+                showAlert("Error: ", "Cant't load the file to overwrite.");
                 return;
             }
         }
-        if ("Esegui Script".equals(selectedAction.toString())) {
+        if ("Execute script".equals(selectedAction.toString())) {
             String parameters = textFieldWriteFile.getText();
             String filePath = selectedFile.getAbsolutePath();
             if (filePath != null && !filePath.isEmpty()) {
                 ExecuteProgramAction executeProgramAction = new ExecuteProgramAction(filePath, parameters);
                 rule.setAction(executeProgramAction);
             } else {
-                showAlert("Errore: ", "Problema con il caricamento del file da sovrascrivere");
+                showAlert("Error: ", "Can't load the script to execute.");
                 return;
             }
         }
-        if ("Copia File".equals(selectedAction.toString())) {
+        if ("Copy file".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
             String filePathDestination = selectedPathAction;
             if (filePathDestination != null && !filePathDestination.isEmpty()) {
@@ -303,11 +304,11 @@ public class AddActionController implements Initializable {
                 fileCopyAction.setCopyFile(filePath, filePathDestination);
                 rule.setAction(fileCopyAction);
             } else {
-                showAlert("Errore: ", "Problema con il file da copiare");
+                showAlert("Error: ", "Can't load the file to copy.");
                 return;
             }
         }
-        if ("Sposta File".equals(selectedAction.toString())) {
+        if ("Move file".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
             String filePathDestination = selectedPathAction;
             if (filePathDestination != null && !filePathDestination.isEmpty()) {
@@ -315,15 +316,20 @@ public class AddActionController implements Initializable {
                 fileMoveAction.setMoveFile(filePath, filePathDestination);
                 rule.setAction(fileMoveAction);
             } else {
-                showAlert("Errore: ", "Problema con il file da copiare");
+                showAlert("Error: ", "Can't load the file to move.");
                 return;
             }
         }
-        if ("Elimina File".equals(selectedAction.toString())) {
+        if ("Delete File".equals(selectedAction.toString())) {
             String filePath = selectedFile.getAbsolutePath();
-            FileDeleteAction fileDeleteAction = new FileDeleteAction(filePath);
-            fileDeleteAction.setFilePath(filePath);
-            rule.setAction(fileDeleteAction);
+            if(!filePath.isEmpty()) {
+                FileDeleteAction fileDeleteAction = new FileDeleteAction(filePath);
+                fileDeleteAction.setFilePath(filePath);
+                rule.setAction(fileDeleteAction);
+            }else{
+                showAlert("Error: ", "Can't find the file to remove.");
+                return;
+            }
         }
 
 
@@ -346,14 +352,14 @@ public class AddActionController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         // fileChooser.setTitle("Scegli un file");
         //Cambio il filtro a seconda dell'azione che eseguo
-        if ("Riproduzione Audio".equals(actionComboBox.getValue())) {
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File Audio", "*.mp3", "*.wav"));
+        if ("Play audio".equals(actionComboBox.getValue())) {
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Audio file", "*.mp3", "*.wav"));
         }
-        if ("Scrittura EOF".equals(actionComboBox.getValue())) {
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File di testo", "*.txt"));
+        if ("Write EOF".equals(actionComboBox.getValue())) {
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text file", "*.txt"));
         }
-        if ("Esegui Script".equals(actionComboBox.getValue())) {
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Script Path", "*.sh"));
+        if ("Execute script".equals(actionComboBox.getValue())) {
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Script path", "*.sh"));
         }
         // Mostra la finestra di dialogo per la selezione del file
         selectedFile = fileChooser.showOpenDialog(new Stage());
@@ -367,9 +373,9 @@ public class AddActionController implements Initializable {
 
     @Deprecated
     public void addDirectoryTrigger(ActionEvent actionEvent) {
-        if ("Esistenza file".equals(triggerComboBox.getValue())) {
+        if ("File state".equals(triggerComboBox.getValue())) {
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setTitle("Seleziona una cartella");
+            directoryChooser.setTitle("Choose a directory");
 
             File selectedDirectory = directoryChooser.showDialog(new Stage());
             if (selectedDirectory != null) {
@@ -403,7 +409,7 @@ public class AddActionController implements Initializable {
     @FXML
     private void openDirectoryChooser(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Seleziona una cartella di destinazione");
+        directoryChooser.setTitle("Choose a destination directory");
 
         // Mostra la finestra di dialogo della cartella di destinazione
         File selectedDirectory = directoryChooser.showDialog(new Stage());
@@ -418,9 +424,9 @@ public class AddActionController implements Initializable {
 
     @FXML
     public void addFileTrigger(ActionEvent actionEvent) {
-        if ("Esistenza File".equals(triggerComboBox.getValue().toString())) {
+        if ("File state".equals(triggerComboBox.getValue().toString())) {
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setTitle("Seleziona una cartella di destinazione");
+            directoryChooser.setTitle("Choose a destination directory");
             // Mostra la finestra di dialogo della cartella di destinazione
             File selectedDirectory = directoryChooser.showDialog(new Stage());
 
@@ -429,7 +435,7 @@ public class AddActionController implements Initializable {
                 selectedPathTrigger = selectedDirectory.getAbsolutePath();
             }
         }
-        if ("Dimensione File".equals(triggerComboBox.getValue().toString())) {
+        if ("File size".equals(triggerComboBox.getValue().toString())) {
             FileChooser fileChooser = new FileChooser();
             // Mostra la finestra di dialogo per la selezione del file
             selectedFile = fileChooser.showOpenDialog(new Stage());
