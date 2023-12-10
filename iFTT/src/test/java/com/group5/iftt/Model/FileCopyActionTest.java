@@ -14,7 +14,7 @@ public class FileCopyActionTest {
 
     @Test
     public void testStartAction() throws IOException {
-        // Crea un oggetto FileCopyAction per il test
+        // Crea un oggetto FileCopyAction per il test.
         String sourceFilePath = "src/test/componenti_test/binaries.txt";
         String destinationFolderPath = "src/test/componenti_test/componenti_test2";
         FileCopyAction fileCopyAction = new FileCopyAction(sourceFilePath, destinationFolderPath);
