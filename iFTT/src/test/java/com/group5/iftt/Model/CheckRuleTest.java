@@ -92,7 +92,7 @@ public class CheckRuleTest {
     void testStopChecking() {
         // Arresta il controllo e verifica che lo scheduler sia spento
         checkRule.stopChecking();
-        assertTrue(checkRule.scheduler.isShutdown(), "Lo scheduler dovrebbe essere spento");
+        assertTrue(checkRule.getScheduler().isShutdown(), "Lo scheduler dovrebbe essere spento");
     }
 
 

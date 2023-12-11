@@ -107,6 +107,17 @@ public class Rule implements Serializable {
         return compare >= 0;
     }
 
+    public int getDays() {
+        return days;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
 
     public boolean isTriggered() {
         return  trigger.get().isValidate();
@@ -181,5 +192,6 @@ public class Rule implements Serializable {
                 ", status=" + status.get() +
                 '}';
     }
+
 }
 

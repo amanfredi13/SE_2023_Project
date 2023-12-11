@@ -10,7 +10,6 @@ public class CheckRule {
     private static CheckRule instance;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-
     public CheckRule() {
         // Esegui il controllo ogni secondo
         scheduler.scheduleAtFixedRate(this::check, 0, 1, TimeUnit.SECONDS);
@@ -25,7 +24,7 @@ public class CheckRule {
 
     // Questo metodo è chiamato periodicamente, esamina tutte le regole presenti in RuleService.
     // Se una regola è abilitata, non è in sleeping e il suo trigger è attivato, esegue l'azione associata alla regola
-    private void check() {
+    public void check() {
         Platform.runLater(() -> {
             for (Rule rule : RuleService.getInstance()) {
                 if (rule.isSleeping()) {
@@ -48,8 +47,8 @@ public class CheckRule {
         scheduler.shutdown();
     }
 
-
-
-
+    public ScheduledExecutorService getScheduler() {
+        return scheduler;
+    }
 }
 

@@ -17,7 +17,7 @@ public class FileSizeTriggerTest {
     @Test
     public void testIsValidateWhenFileExistsAndDoesNotExceedMaxSize() {
         // Crea un oggetto FileSizeTrigger con un percorso esistente e una dimensione massima maggiore della dimensione del file
-        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binaries.txt", "10");
+        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binariesMax.txt", "10");
 
         // Verifica che isValidate restituisca true perché la dimensione del file non supera quella specificata
         assertTrue(trigger.isValidate());
@@ -42,9 +42,9 @@ public class FileSizeTriggerTest {
     @Test
     public void testIsValidateWithInvalidMaxSize() {
         // Crea un oggetto FileSizeTrigger con un percorso esistente e una dimensione massima non valida (non numerica)
-        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binaries.txt", "invalid");
+        FileSizeTrigger trigger = new FileSizeTrigger("src/test/componenti_test/binariesMax.txt", "invalid");
 
         // Verifica che isValidate generi un'eccezione IllegalArgumentException perché la dimensione massima non è un numero valido
-        assertThrows( NumberFormatException.class, trigger::isValidate);
+        assertThrows(NumberFormatException.class, trigger::isValidate);
     }
 }

@@ -33,7 +33,7 @@ public class FileDeleteActionTest {
         FileDeleteAction fileDeleteAction = new FileDeleteAction();
 
         // Verifica che il metodo toString restituisca la stringa attesa
-        assertEquals("Elimina File", fileDeleteAction.toString());
+        assertEquals("Delete file", fileDeleteAction.toString());
         System.out.println("Il metodo toString restituisce la stringa attesa: "+ fileDeleteAction.toString());
     }
 
